@@ -1,3 +1,7 @@
+body {
+  font-family: 'Montserrat';
+}
+
 /* NAV BAR */
 .nav-bar {
   display: flex;
@@ -17,9 +21,11 @@
 .search-bar {
   flex: 1;
   margin-right: 20px;
+  border-radius: 5px;
 }
 
 .search-bar-input {
+  border-radius: 5px;
   border: 3px solid #ff6666;
   padding: 10px;
   font-size: 16px;
