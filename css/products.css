@@ -36,7 +36,7 @@
 }
 
 .product-card button {
-  background-color: #ff6666;
+  background-color: #FB4D3D;
   color: #fff;
   border: none;
   padding: 10px;
@@ -44,10 +44,10 @@
   border-radius: 80px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #ff6666;
+  border: 1px solid #FB4D3D;
 }
 
 .product-card button:hover {
   background-color: #fff;
-  color: #ff6666;
+  color: #FB4D3D;
 }

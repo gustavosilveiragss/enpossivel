@@ -9,12 +9,12 @@ body {
   align-items: center;
   color: #f2f2f2;
   padding: 10px;
-  border-bottom: 3px solid #ff6666;
+  border-bottom: 3px solid #FB4D3D;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
+.logo img {
+  height: auto;
+  max-width: 200px;
   margin-right: 20px;
 }
 
@@ -26,7 +26,7 @@ body {
 
 .search-bar-input {
   border-radius: 5px;
-  border: 3px solid #ff6666;
+  border: 3px solid #FB4D3D;
   padding: 10px;
   font-size: 16px;
   background-color: #fff;
