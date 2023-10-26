@@ -1,7 +1,8 @@
 -- Sample data for the User table
-INSERT INTO user (created_at, name, email, password, role) VALUES
-    ('2023-10-25 09:00:00', 'John Doe', 'john.doe@example.com', 'hashed_password', 'user'),
-    ('2023-10-25 10:30:00', 'Jane Smith', 'jane.smith@example.com', 'hashed_password', 'admin');
+INSERT INTO account (created_at, name, email, password, role) VALUES
+    ('2023-10-25 09:00:00', 'John Doe', 'john.doe@example.com', 'hashed_password', 'account'),
+    ('2023-10-25 10:30:00', 'Jane Smith', 'jane.smith@example.com', 'hashed_password', 'admin'),
+    ('2023-10-25 11:30:00', null, null, null, 'anon');
 
 -- Sample data for the Product table
 INSERT INTO product (created_at, title, price, img_path) VALUES
@@ -9,7 +10,7 @@ INSERT INTO product (created_at, title, price, img_path) VALUES
     ('2023-10-25 09:15:00', 'Product B', 39.99, '/images/product_b.jpg');
 
 -- Sample data for the Cart table
-INSERT INTO cart (created_at, user_id) VALUES
+INSERT INTO cart (created_at, account_id) VALUES
     ('2023-10-25 10:00:00', 1),
     ('2023-10-25 11:30:00', 2);
 
@@ -24,7 +25,7 @@ INSERT INTO payment_method (created_at, name) VALUES
     ('2023-10-25 09:45:00', 'Debit Card');
 
 -- Sample data for the Order table
-INSERT INTO `order`(created_at, user_id) VALUES
+INSERT INTO `order`(created_at, account_id) VALUES
     ('2023-10-25 11:00:00', 1),
     ('2023-10-25 12:30:00', 2);
 
