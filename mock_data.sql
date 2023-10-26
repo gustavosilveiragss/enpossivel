@@ -1,3 +1,4 @@
+-- Active: 1698186000660@@127.0.0.1@3306@enpossivel
 -- Sample data for the User table
 INSERT INTO account (name, email, password, role) VALUES
     ('John Doe', 'john.doe@example.com', 'hashed_password', 'account'),
