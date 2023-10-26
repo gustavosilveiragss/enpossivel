@@ -52,8 +52,11 @@ body {
   right: -30%;
   width: 30%;
   height: 100%;
-  background-color: #f2f2f2;
+  background-color: rgba(242, 242, 242, 0.4);
+  backdrop-filter: blur(5px);
   transition: all 0.3s ease;
+  z-index: 1;
+  overflow-y: auto;
 }
 
 .nav-menu ul {
