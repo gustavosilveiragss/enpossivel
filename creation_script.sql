@@ -1,3 +1,4 @@
+-- Active: 1698186000660@@127.0.0.1@3306@enpossivel
 CREATE TABLE account (
     account_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     created_at TIMESTAMP NOT NULL,
@@ -27,7 +28,6 @@ CREATE TABLE cart_item (
     created_at TIMESTAMP NOT NULL,
     cart_id INT NOT NULL,
     product_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
     FOREIGN KEY (cart_id) REFERENCES cart(cart_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
@@ -50,7 +50,6 @@ CREATE TABLE order_item (
     created_at TIMESTAMP NOT NULL,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
     FOREIGN KEY (order_id) REFERENCES `order`(order_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
