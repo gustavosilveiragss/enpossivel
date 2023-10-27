@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
+import { isLoggedIn } from "./utils.js";
+
+document.addEventListener("DOMContentLoaded", async function () {
     const navBar = `
         <div class="nav-bar">
             <div class="logo">
@@ -26,7 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const buttons = [];
 
-    if (1 == 2) {
+    console.log(await isLoggedIn());
+
+    if (!(await isLoggedIn())) {
         buttons.push({
             name: "Login",
             id: "btn_login",
@@ -47,12 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 ${pages
                     .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
                     .join("")}
+                <li>
                 ${buttons
                     .map(
                         (b) =>
-                            `<li><button class="nav-menu-btn" id="${b.id}">${b.name}</button></li>`
+                            `<button class="nav-menu-btn" id="${b.id}">${b.name}</button>`
                     )
                     .join("")}
+                </li>
             </ul>
         </div>
     `;
@@ -86,6 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function logout() {
-        console.log("logout");
+        
     }
 });
