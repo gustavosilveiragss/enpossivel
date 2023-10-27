@@ -11,9 +11,11 @@ export async function genLoginCookie() {
 
     const data = await response.json();
 
-    const accId = ++data.id;
+    const accId = ++data.account_id;
 
     document.cookie = "accountId=" + accId;
+
+    console.log(accId);
 
     await fetch("/php/insert_new_account.php", {
         headers: {
@@ -27,8 +29,13 @@ export async function genLoginCookie() {
 
     return accId;
 }
+
 export async function isLoggedIn() {
-    const accId = await genLoginCookie();
+    const accId = document.cookie.split("=")[1];
+
+    if (!accId) {
+        return false;
+    }
 
     const response = await fetch("/php/is_logged_in.php", {
         headers: {
@@ -47,4 +54,15 @@ export async function isLoggedIn() {
     const data = await response.json();
 
     return data && data.role !== "anon"; 
+}
+
+export function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
 }

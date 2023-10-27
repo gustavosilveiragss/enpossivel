@@ -1,4 +1,4 @@
-import { isLoggedIn } from "./utils.js";
+import * as utils from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
     const navBar = `
@@ -28,9 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const buttons = [];
 
-    console.log(await isLoggedIn());
-
-    if (!(await isLoggedIn())) {
+    if (!(await utils.isLoggedIn())) {
         buttons.push({
             name: "Login",
             id: "btn_login",
@@ -92,6 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     function logout() {
-        
+        utils.deleteAllCookies();
+        window.location.reload();
     }
 });
