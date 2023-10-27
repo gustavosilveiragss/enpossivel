@@ -14,7 +14,7 @@ body {
   align-items: center;
   color: #f2f2f2;
   padding: 10px;
-  border-bottom: 3px solid #FB4D3D;
+  border-bottom: 3px solid #fb4d3d;
 }
 
 .logo img {
@@ -31,7 +31,8 @@ body {
 
 input {
   border-radius: 5px;
-  border: 3px solid #FB4D3D;
+  box-shadow: 0 1px 1px gray;
+  border: 1px solid #ddd;
   padding: 10px;
   font-size: 16px;
   background-color: #fff;
@@ -46,7 +47,8 @@ input {
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 5px #999;
+  border: 1px solid #ff6666ff;
+  box-shadow: 0 0 2px #ff6666ff;
   background-color: #fff;
 }
 

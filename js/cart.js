@@ -6,9 +6,10 @@ async function create_cart_table() {
         return;
 
     const json = await response.json();
-    console.log(json);
+    if (json.length === 0) {
+    }
 
-    const cartTable = document.querySelector(".cart-table");
+    let cartTable = document.querySelector(".cart-table");
     let headerRow = document.createElement("tr");
     cartTable.appendChild(headerRow);
 
@@ -51,8 +52,12 @@ async function create_cart_table() {
             if (!response || !response.ok)
                 return;
 
-            cartTable.innerHTML = "";
-            await create_cart_table();
+            const new_quantity = Number(quantity.innerText) - 1;
+            if (new_quantity === 0) {
+                cartTable.removeChild(cartRow);
+            } else {
+                quantity.innerText = new_quantity;
+            }
         };
 
         cartRow.appendChild(name);
