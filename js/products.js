@@ -1,14 +1,15 @@
 window.onload = create_product_cards();
 
 async function create_product_cards() {
-    const response = await fetch("/php/fetch_products.php");
+    const response = await fetch("/php/select_product.php");
     if (!response || !response.ok)
         return;
 
-    const data = await response.json();
+    const json = await response.json();
+    console.log(json);
 
     const productsGrid = document.querySelector(".products-grid");
-    data.forEach((product) => {
+    json.forEach((product) => {
         const productCard = document.createElement("div");
         productCard.classList.add("product-card");
 
@@ -29,7 +30,7 @@ async function create_product_cards() {
         productButton.textContent = "Adicionar ao carrinho";
         productButton.onclick = async () => {
             const id = productButton.id.split("-")[1];
-            await fetch("/php/add_product_to_cart.php", {
+            await fetch("/php/insert_product.php", {
                 headers: {
                     'Content-Type': 'application/json'
                 },

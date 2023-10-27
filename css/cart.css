@@ -1,0 +1,29 @@
+.cart-table {
+  align-items: center;
+  border-spacing: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.cart-table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.remove-product-button {
+  background-color: #fb4d3d;
+  color: white;
+  border: none;
+  padding: 4px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #fb4d3d;
+}
+
+.remove-product-button:hover {
+  background-color: #fff;
+  color: #fb4d3d;
+}

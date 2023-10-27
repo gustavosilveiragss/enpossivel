@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const pages = [
         { name: "Produtos", url: "/pages/index.html" },
-        { name: "Carrinho", url: "/pages/carrinho.html" },
+        { name: "Carrinho", url: "/pages/cart.html" },
     ];
 
     const buttons = [];
@@ -47,15 +47,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         <div class="nav-menu">
             <ul>
                 ${pages
-                    .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
-                    .join("")}
+            .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
+            .join("")}
                 <li>
                 ${buttons
-                    .map(
-                        (b) =>
-                            `<button class="nav-menu-btn" id="${b.id}">${b.name}</button>`
-                    )
-                    .join("")}
+            .map(
+                (b) =>
+                    `<button class="nav-menu-btn" id="${b.id}">${b.name}</button>`
+            )
+            .join("")}
                 </li>
             </ul>
         </div>
