@@ -53,7 +53,7 @@ export async function isLoggedIn() {
 
     const data = await response.json();
 
-    return data && data.role !== "anon"; 
+    return data && data.role !== "anon";
 }
 
 export function deleteAllCookies() {

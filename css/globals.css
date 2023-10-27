@@ -62,7 +62,7 @@ input:focus {
   position: fixed;
   top: 0;
   right: -30%;
-  width: 30%;
+  width: 15%;
   height: 100%;
   background-color: rgba(242, 242, 242, 0.4);
   backdrop-filter: blur(5px);
@@ -101,7 +101,7 @@ input:focus {
 }
 
 button {
-  background-color: #FB4D3D;
+  background-color: #fb4d3d;
   color: #fff;
   border: none;
   padding: 10px;
@@ -109,12 +109,12 @@ button {
   border-radius: 80px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #FB4D3D;
+  border: 1px solid #fb4d3d;
 }
 
 button:hover {
   background-color: #fff;
-  color: #FB4D3D;
+  color: #fb4d3d;
 }
 
 .green-btn {
@@ -143,7 +143,8 @@ button:hover {
     margin-right: auto;
   }
 
-  input, .search-bar > input {
+  input,
+  .search-bar > input {
     width: -moz-available;
     width: -webkit-fill-available;
   }

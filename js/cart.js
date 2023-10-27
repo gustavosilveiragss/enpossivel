@@ -7,6 +7,7 @@ async function create_cart_table() {
 
     const json = await response.json();
     if (json.length === 0) {
+
     }
 
     let cartTable = document.querySelector(".cart-table");
