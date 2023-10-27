@@ -6,7 +6,6 @@ async function create_product_cards() {
         return;
 
     const json = await response.json();
-    console.log(json);
 
     const productsGrid = document.querySelector(".products-grid");
     json.forEach((product) => {

@@ -34,20 +34,3 @@
   font-size: 16px;
   font-weight: bold;
 }
-
-.product-card button {
-  background-color: #FB4D3D;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  font-size: 18px;
-  border-radius: 80px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid #FB4D3D;
-}
-
-.product-card button:hover {
-  background-color: #fff;
-  color: #FB4D3D;
-}

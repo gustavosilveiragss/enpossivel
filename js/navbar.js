@@ -1,6 +1,8 @@
 import * as utils from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
+    utils.genLoginCookie();
+
     const navBar = `
         <div class="nav-bar">
             <div class="logo">
@@ -30,12 +32,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (!(await utils.isLoggedIn())) {
         buttons.push({
-            name: "Login",
+            name: "Bater Ponto",
             id: "btn_login",
             onclick: () => window.open("/pages/login.html"),
         });
         buttons.push({
-            name: "Criar conta",
+            name: "Registrar Crachá",
             id: "btn_register",
             onclick: () => window.open("/pages/register.html"),
         });
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 ${buttons
             .map(
                 (b) =>
-                    `<button class="nav-menu-btn" id="${b.id}">${b.name}</button>`
+                    `<button class="green-btn" id="${b.id}">${b.name}</button>`
             )
             .join("")}
                 </li>
