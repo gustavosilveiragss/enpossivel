@@ -97,6 +97,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function logout() {
         utils.deleteAllCookies();
-        window.location.reload();
+        window.location.href = "/pages/";
     }
 });

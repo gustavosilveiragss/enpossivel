@@ -1,9 +1,9 @@
-.register-wrapper {
+.auth-wrapper {
   display: flex;
   justify-content: center;
 }
 
-.registration-form {
+.auth-form {
   width: 30%;
   margin: 20px auto;
   padding: 20px;
@@ -35,7 +35,7 @@ h2 {
 }
 
 @media screen and (max-width: 768px) {
-  .registration-form {
+  .auth-form {
     width: 100%;
   }
 }

@@ -7,11 +7,16 @@ $env = parse_ini_string($env_file);
 
 $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB_DATABASE"]);
 
-$stmt = $db->prepare("UPDATE account a SET a.name = ?, a.email = ?, a.password = ?, a.role = 'account' WHERE a.account_id = ?");
+$stmt = $db->prepare("SELECT account_id FROM account a WHERE a.email = ? AND a.password = ? LIMIT 1");
 
-$stmt->bind_param("sssi", $_POST["name"], $_POST["email"], $_POST["password"], $_POST["account_id"]);
+$stmt->bind_param("ss", $_POST["email"], $_POST["password"]);
 
 $stmt->execute();
 
-$db->commit();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    echo json_encode($row);
+}
+
 $db->close();
