@@ -13,7 +13,7 @@ form.addEventListener("submit", async (event) => {
     });
 
     if (!response || !response.ok) {
-        alert("Não existe crachá com essas credenciais aí!");
+        utils.showNotification("Não existe crachá com essas credenciais aí!");
         return;
     }
 
@@ -24,6 +24,6 @@ form.addEventListener("submit", async (event) => {
         document.cookie = "accountId=" + account.account_id;
     }
 
-    alert("Ponto batido com sucesso, vai preencher o caldeirão!");
+    utils.showNotification("Ponto batido com sucesso, vai preencher o caldeirão!");
     window.location.href = "/pages/";
 });

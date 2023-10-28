@@ -15,6 +15,11 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 
+if ($result->num_rows === 0) {
+    http_response_code(404);
+    echo json_encode(["error" => "Invalid email or password"]);
+}
+
 while ($row = $result->fetch_assoc()) {
     echo json_encode($row);
 }

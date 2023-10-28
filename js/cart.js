@@ -5,7 +5,7 @@ window.onload = create_cart_table();
 async function create_cart_table() {
     const response = await fetch("/php/select_cart_item.php", {
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify({
@@ -13,12 +13,10 @@ async function create_cart_table() {
         }),
     });
 
-    if (!response || !response.ok)
-        return;
+    if (!response || !response.ok) return;
 
     const json = await response.json();
     if (json.length === 0) {
-
     }
 
     let cartTable = document.querySelector(".cart-table");
@@ -54,14 +52,20 @@ async function create_cart_table() {
         button.id = id;
         button.innerHTML = "<span class='fa fa-trash'></span>";
         deleteProduct.appendChild(button);
+
         button.onclick = async () => {
             const id = button.id.split("-")[1];
             const response = await fetch("/php/delete_cart_item.php", {
                 method: "POST",
-                body: JSON.stringify({ product_id: id, account_id: utils.getAccountToken() }),
+                body: JSON.stringify({
+                    product_id: id,
+                    account_id: utils.getAccountToken(),
+                }),
             });
-            if (!response || !response.ok)
-                return;
+
+            if (!response || !response.ok) return;
+
+            utils.showNotification("Produto removido do caldeirão!");
 
             const new_quantity = Number(quantity.innerText) - 1;
             if (new_quantity === 0) {
@@ -78,5 +82,4 @@ async function create_cart_table() {
 
         cartTable.appendChild(cartRow);
     });
-
 }

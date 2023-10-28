@@ -8,7 +8,7 @@ form.addEventListener("submit", async (event) => {
     const formData = new FormData(form);
 
     if (formData.get("password") !== formData.get("confirm-password")) {
-        alert("Senhas não coincidem");
+        utils.showNotification("Senhas não coincidem");
         return;
     }
 
@@ -20,10 +20,10 @@ form.addEventListener("submit", async (event) => {
     });
 
     if (!response || !response.ok) {
-        alert("Registro do crachá deu errado!");
+        utils.showNotification("Registro do crachá deu errado!");
         return;
     }
 
-    alert("Registro realizado com sucesso!");
+    utils.showNotification("Registro realizado com sucesso!");
     window.location.href = "/pages/";
 });

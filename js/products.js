@@ -42,7 +42,7 @@ async function create_product_cards() {
                     product_id: id,
                 }),
             });
-            alert("Produto adicionado ao caldeirão!");
+            utils.showNotification("Produto adicionado ao caldeirão!");
         };
 
         productInfo.appendChild(productName);

@@ -17,7 +17,7 @@ export async function genLoginCookie() {
 
     await fetch("/php/insert_new_account.php", {
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify({
@@ -35,12 +35,11 @@ export function getAccountToken() {
 
 export async function isLoggedIn() {
     const accId = getAccountToken();
-    if (!accId)
-        return false;
+    if (!accId) return false;
 
     const response = await fetch("/php/is_logged_in.php", {
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify({
@@ -48,9 +47,7 @@ export async function isLoggedIn() {
         }),
     });
 
-    if (!response || !response.ok)
-        return;
-
+    if (!response || !response.ok) return;
 
     const data = await response.json();
     return data && data.role !== "anon";
@@ -65,4 +62,20 @@ export function deleteAllCookies() {
         const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
+}
+
+export function showNotification(message) {
+    const notificationContainer = document.querySelector(
+        ".notification-container"
+    );
+
+    notificationContainer.textContent = message;
+
+    if (notificationContainer.classList.contains("show")) return;
+
+    notificationContainer.classList.add("show");
+
+    setTimeout(() => {
+        notificationContainer.classList.remove("show");
+    }, 3000);
 }
