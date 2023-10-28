@@ -12,7 +12,7 @@ body {
   border: 1px solid #ddd;
 }
 
-.cart-table-container {
+.cart-table-wrapper {
   display: flex;
   justify-content: center;
   padding-top: 20px;

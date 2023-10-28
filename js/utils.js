@@ -30,12 +30,15 @@ export async function genLoginCookie() {
     return accId;
 }
 
-export async function isLoggedIn() {
-    const accId = document.cookie.split("=")[1];
+export function getAccountToken() {
+    // this relies on the fact that we only have 1 cookie!
+    return document.cookie.split("=")[1];
+}
 
-    if (!accId) {
+export async function isLoggedIn() {
+    const accId = getAccountToken();
+    if (!accId)
         return false;
-    }
 
     const response = await fetch("/php/is_logged_in.php", {
         headers: {
@@ -47,12 +50,11 @@ export async function isLoggedIn() {
         }),
     });
 
-    if (!response || !response.ok) {
+    if (!response || !response.ok)
         return;
-    }
+
 
     const data = await response.json();
-
     return data && data.role !== "anon";
 }
 

@@ -1,3 +1,5 @@
+import * as utils from "./utils.js";
+
 window.onload = create_product_cards();
 
 async function create_product_cards() {
@@ -11,6 +13,7 @@ async function create_product_cards() {
     json.forEach((product) => {
         const productCard = document.createElement("div");
         productCard.classList.add("product-card");
+        productCard.classList.add("container");
 
         const productImage = document.createElement("img");
         productImage.src = product.img_path;
@@ -35,7 +38,7 @@ async function create_product_cards() {
                 },
                 method: "POST",
                 body: JSON.stringify({
-                    // FIXME: get user id from session cookie
+                    account_id: utils.getAccountToken(),
                     product_id: id,
                 }),
             });

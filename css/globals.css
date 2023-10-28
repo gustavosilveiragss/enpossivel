@@ -32,7 +32,6 @@ body {
 
 input {
   border-radius: 5px;
-  box-shadow: 0 1px 1px gray;
   border: 1px solid #ddd;
   padding: 10px;
   font-size: 16px;
@@ -44,6 +43,7 @@ input {
 .search-bar > input {
   width: max-content;
   margin-right: 20px;
+  box-shadow: 0 1px 1px gray;
 }
 
 input:focus {
@@ -127,6 +127,11 @@ button:hover {
 
 .green-btn:hover {
   color: #42ce47;
+}
+
+.container {
+  box-shadow: 0 1px 1px gray;
+  border-radius: 20px;
 }
 
 @media screen and (max-width: 768px) {
