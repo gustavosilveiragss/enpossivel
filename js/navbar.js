@@ -34,12 +34,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         buttons.push({
             name: "Bater Ponto",
             id: "btn_login",
-            onclick: () => window.open("/pages/login.html"),
+            onclick: () => (window.location.href = "/pages/login.html"),
         });
         buttons.push({
             name: "Registrar Crachá",
             id: "btn_register",
-            onclick: () => window.open("/pages/register.html"),
+            onclick: () => (window.location.href = "/pages/register.html"),
         });
     } else {
         buttons.push({ name: "Logout", id: "btn_logout", onclick: logout });
@@ -49,15 +49,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         <div class="nav-menu">
             <ul>
                 ${pages
-            .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
-            .join("")}
+                    .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
+                    .join("")}
                 <li>
                 ${buttons
-            .map(
-                (b) =>
-                    `<button class="green-btn" id="${b.id}">${b.name}</button>`
-            )
-            .join("")}
+                    .map(
+                        (b) =>
+                            `<button class="green-btn" id="${b.id}">${b.name}</button>`
+                    )
+                    .join("")}
                 </li>
             </ul>
         </div>
@@ -74,6 +74,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
     });
+
+    document.querySelector(".logo").addEventListener("click", () => {
+        window.location.href = "/pages/";
+    })
 
     const hamburgerMenu = document.querySelector(".hamburger-menu");
     const optionsBar = document.querySelector(".nav-menu");
