@@ -1,7 +1,18 @@
+import * as utils from "./utils.js";
+
 window.onload = create_cart_table();
 
 async function create_cart_table() {
-    const response = await fetch("/php/select_product_in_cart.php");
+    const response = await fetch("/php/select_cart_item.php", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            account_id: utils.getAccountToken(),
+        }),
+    });
+
     if (!response || !response.ok)
         return;
 
@@ -37,7 +48,6 @@ async function create_cart_table() {
         quantity.innerText = product.quantity;
 
         const id = `deleteproduct-${product.product_id}`;
-        console.log(id);
 
         let button = document.createElement("button");
         button.className = "remove-product-button";
@@ -46,9 +56,9 @@ async function create_cart_table() {
         deleteProduct.appendChild(button);
         button.onclick = async () => {
             const id = button.id.split("-")[1];
-            const response = await fetch("/php/delete_product_in_cart.php", {
+            const response = await fetch("/php/delete_cart_item.php", {
                 method: "POST",
-                body: JSON.stringify({ product_id: id }),
+                body: JSON.stringify({ product_id: id, account_id: utils.getAccountToken() }),
             });
             if (!response || !response.ok)
                 return;

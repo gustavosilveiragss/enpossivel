@@ -15,8 +15,6 @@ export async function genLoginCookie() {
 
     document.cookie = "accountId=" + accId;
 
-    console.log(accId);
-
     await fetch("/php/insert_new_account.php", {
         headers: {
             'Content-Type': 'application/json'

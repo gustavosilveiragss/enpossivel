@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const pages = [
         { name: "Produtos", url: "/pages/index.html" },
-        { name: "Carrinho", url: "/pages/cart.html" },
+        { name: "Caldeirão", url: "/pages/cart.html" },
     ];
 
     const buttons = [];

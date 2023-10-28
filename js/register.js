@@ -1,31 +1,27 @@
 const form = document.querySelector("form");
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  const formData = new FormData(form);
+    const formData = new FormData(form);
 
-  if (formData.get("password") !== formData.get("confirm-password")) {
-    alert("Senhas não coincidem");
-    return;
-  }
+    if (formData.get("password") !== formData.get("confirm-password")) {
+        alert("Senhas não coincidem");
+        return;
+    }
 
-  fetch("/php/insert_registered_account", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => {
-      if (response.ok) {
-        alert("Registro realizado com sucesso!");
-        // LOGIN
-        // go to products page
-        window.location.href = "/pages/";
-      } else {
-        alert("Erro ao realizar o registro");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("Erro ao realizar o registro");
+    formData.set("account_id", utils.getAccountToken());
+
+    const response = await fetch("/php/insert_registered_account", {
+        method: "POST",
+        body: formData,
     });
+
+    if (!response || !response.ok) {
+        alert("Registro do crachá deu errado!");
+        return;
+    }
+
+    alert("Registro realizado com sucesso!");
+    window.location.href = "/pages/";
 });

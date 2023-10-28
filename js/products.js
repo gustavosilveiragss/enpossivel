@@ -29,10 +29,10 @@ async function create_product_cards() {
 
         const productButton = document.createElement("button");
         productButton.id = `product-${product.product_id}`;
-        productButton.textContent = "Adicionar ao carrinho";
+        productButton.textContent = "Adicionar ao caldeirão";
         productButton.onclick = async () => {
             const id = productButton.id.split("-")[1];
-            await fetch("/php/insert_product.php", {
+            await fetch("/php/insert_cart_item.php", {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -42,6 +42,7 @@ async function create_product_cards() {
                     product_id: id,
                 }),
             });
+            alert("Produto adicionado ao caldeirão!");
         };
 
         productInfo.appendChild(productName);
