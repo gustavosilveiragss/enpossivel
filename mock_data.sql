@@ -8,7 +8,7 @@ VALUES (
         'John Doe',
         'john.doe@example.com',
         'hashed_password',
-        'account'
+        'user'
     ), (
         'Jane Smith',
         'jane.smith@example.com',
@@ -23,11 +23,11 @@ INSERT INTO
 VALUES (
         'Product A',
         29.99,
-        '/images/product_a.jpg'
+        '/res/images/img.png'
     ), (
         'Product B',
         39.99,
-        '/images/product_b.jpg'
+        '/res/images/_42dfff0d-10bb-4d6f-ba2b-e62939034c64.jpeg'
     );
 
 -- Sample data for the Cart table

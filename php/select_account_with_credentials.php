@@ -7,9 +7,9 @@ $env = parse_ini_string($env_file);
 
 $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB_DATABASE"]);
 
-$stmt = $db->prepare("SELECT account_id FROM account a WHERE a.email = ? AND a.password = ? LIMIT 1");
+$stmt = $db->prepare("SELECT account_id, password FROM account a WHERE a.email = ? LIMIT 1");
 
-$stmt->bind_param("ss", $_POST["email"], $_POST["password"]);
+$stmt->bind_param("s", $_POST["email"]);
 
 $stmt->execute();
 
@@ -17,11 +17,20 @@ $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
     http_response_code(404);
-    echo json_encode(["error" => "Invalid email or password"]);
+    echo json_encode(["error" => "Email ou senha inválidos"]);
+    $db->close();
+    die();
 }
 
-while ($row = $result->fetch_assoc()) {
-    echo json_encode($row);
+$row = $result->fetch_assoc();
+$password_hash = $row["password"];
+
+if (password_verify($_POST["password"], $password_hash)) {
+    echo json_encode(["account_id" => $row["account_id"]]);
+    $db->close();
+    die();
 }
 
+http_response_code(404);
+echo json_encode(["error" => "Email ou senha inválidos"]);
 $db->close();

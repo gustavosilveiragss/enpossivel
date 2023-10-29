@@ -20,6 +20,12 @@ form.addEventListener("submit", async (event) => {
     });
 
     if (!response || !response.ok) {
+        const json = await response.json();
+        if (json) {
+            utils.showNotification(json.error);
+            return;
+        }
+
         utils.showNotification("Registro do crachá deu errado!");
         return;
     }

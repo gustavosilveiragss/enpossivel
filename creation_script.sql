@@ -7,7 +7,7 @@ CREATE TABLE
         name VARCHAR(255) NULL,
         email VARCHAR(255) NULL,
         password VARCHAR(255) NULL,
-        role ENUM('account', 'admin', 'anon') DEFAULT 'anon'
+        role ENUM('user', 'admin', 'anon') DEFAULT 'anon'
     );
 
 CREATE TABLE
