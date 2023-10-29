@@ -30,19 +30,35 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const buttons = [];
 
-    if (!(await utils.isLoggedIn())) {
-        buttons.push({
-            name: "Bater Ponto",
-            id: "btn_login",
-            onclick: () => (window.location.href = "/pages/login.html"),
-        });
-        buttons.push({
-            name: "Registrar Crachá",
-            id: "btn_register",
-            onclick: () => (window.location.href = "/pages/register.html"),
-        });
-    } else {
-        buttons.push({ name: "Logout", id: "btn_logout", onclick: logout });
+    const role = await utils.getAccountRole();
+
+    switch (role) {
+        case "anon":
+            buttons.push({
+                name: "Bater Ponto",
+                id:"login-btn",
+                onclick: () => (window.location.href = "/pages/login.html"),
+            });
+            buttons.push({
+                name: "Registrar Crachá",
+                id:"register-btn",
+                onclick: () => (window.location.href = "/pages/register.html"),
+            });
+            break;
+        case "admin":
+            buttons.push({
+                name: "Cadastrar Produto",
+                id: "register-product-btn",
+                onclick: () => (window.location.href = "/pages/admin/register-product.html"),
+            });
+            buttons.push({
+                name: "Excluir Produto",
+                id: "delete-product-btn",
+                onclick: () => (window.location.href = "/pages/admin/delete-product.html"),
+            });
+        default:
+            buttons.push({ name: "Logout", id: "logout-btn", onclick: logout });
+            break;
     }
 
     const navMenu = `
@@ -77,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     document.querySelector(".logo").addEventListener("click", () => {
         window.location.href = "/pages/";
-    })
+    });
 
     const hamburgerMenu = document.querySelector(".hamburger-menu");
     const optionsBar = document.querySelector(".nav-menu");

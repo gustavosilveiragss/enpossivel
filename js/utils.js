@@ -33,7 +33,7 @@ export function getAccountToken() {
     return document.cookie.split("=")[1];
 }
 
-export async function isLoggedIn() {
+export async function getAccountRole() {
     const accId = getAccountToken();
     if (!accId) return false;
 
@@ -50,7 +50,7 @@ export async function isLoggedIn() {
     if (!response || !response.ok) return;
 
     const data = await response.json();
-    return data && data.role !== "anon";
+    return data.role;
 }
 
 export function deleteAllCookies() {
