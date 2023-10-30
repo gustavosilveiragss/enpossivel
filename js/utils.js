@@ -47,7 +47,9 @@ export async function getAccountRole() {
         }),
     });
 
-    if (!response || !response.ok) return;
+    if (!response || !response.ok) {
+        return;
+    }
 
     const data = await response.json();
     return data.role;
@@ -69,7 +71,10 @@ export function showNotification(message) {
 
     notificationContainer.textContent = message;
 
-    if (notificationContainer.classList.contains("show")) return;
+    if (notificationContainer.classList.contains("show")) {
+        return;
+    }
+
 
     notificationContainer.classList.add("show");
 

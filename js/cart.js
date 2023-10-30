@@ -13,7 +13,9 @@ async function create_cart_table() {
         }),
     });
 
-    if (!response || !response.ok) return;
+    if (!response || !response.ok) {
+        return;
+    }
 
     let cartTable = document.querySelector(".cart-table");
     const cartIsEmpty = () => {
@@ -71,7 +73,9 @@ async function create_cart_table() {
                 }),
             });
 
-            if (!response || !response.ok) return;
+            if (!response || !response.ok) {
+                return;
+            }
 
             utils.showNotification("Produto removido do caldeirão!");
 
