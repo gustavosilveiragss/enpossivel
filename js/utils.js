@@ -57,12 +57,12 @@ export async function getAccountRole() {
 
 export function deleteAllCookies() {
     const cookies = document.cookie.split(";");
-  
+
     cookies.forEach(cookie => {
-      const name = cookie.split("=")[0];
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        const name = cookie.split("=")[0];
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     });
-  }
+}
 
 export function showNotification(message) {
     const notificationContainer = document.querySelector(
