@@ -9,7 +9,7 @@ $data = json_decode(file_get_contents('php://input'));
 $account_id = $data->account_id;
 
 $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB_DATABASE"]);
-$query = $db->query("SELECT role FROM account a WHERE a.account_id = " . $account_id);
+$query = $db->query("SELECT role FROM account a WHERE a.account_id = $account_id");
 $response = $query->fetch_all(MYSQLI_ASSOC);
 
 echo json_encode($response[0]);
