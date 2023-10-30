@@ -64,21 +64,27 @@ export function deleteAllCookies() {
     });
 }
 
+let notificationTimeoutHandle = null;
+
 export function showNotification(message) {
     const notificationContainer = document.querySelector(
         ".notification-container"
     );
 
     notificationContainer.textContent = message;
-
     if (notificationContainer.classList.contains("show")) {
+        console.assert(notificationTimeoutHandle);
+        clearTimeout(notificationTimeoutHandle);
+        notificationTimeoutHandle = setTimeout(() => {
+            notificationContainer.classList.remove("show");
+        }, 3000);
         return;
     }
 
 
     notificationContainer.classList.add("show");
 
-    setTimeout(() => {
+    notificationTimeoutHandle = setTimeout(() => {
         notificationContainer.classList.remove("show");
     }, 3000);
 }
