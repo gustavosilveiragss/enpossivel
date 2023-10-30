@@ -1,3 +1,4 @@
+import * as auth from "./auth.js";
 import * as utils from "./utils.js";
 
 const form = document.querySelector("form");
@@ -19,7 +20,7 @@ form.addEventListener("submit", async (event) => {
 
     const account = await response.json();
 
-    if (account.account_id != utils.getAccountToken()) {
+    if (account.account_id != auth.getAccountToken()) {
         utils.deleteAllCookies();
         document.cookie = "accountId=" + account.account_id;
     }

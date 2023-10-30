@@ -1,3 +1,4 @@
+import * as auth from "./auth.js";
 import * as utils from "./utils.js";
 
 window.onload = create_cart_table();
@@ -9,7 +10,7 @@ async function create_cart_table() {
         },
         method: "POST",
         body: JSON.stringify({
-            account_id: utils.getAccountToken(),
+            account_id: auth.getAccountToken(),
         }),
     });
 
@@ -69,7 +70,7 @@ async function create_cart_table() {
                 method: "POST",
                 body: JSON.stringify({
                     product_id: id,
-                    account_id: utils.getAccountToken(),
+                    account_id: auth.getAccountToken(),
                 }),
             });
 
@@ -77,7 +78,7 @@ async function create_cart_table() {
                 return;
             }
 
-            utils.showNotification("Produto removido do caldeirão!");
+            utils.showNotification(`${nameHeader.textContent} foi removido do caldeirão`);
 
             const new_quantity = Number(quantity.innerText) - 1;
             if (new_quantity === 0) {

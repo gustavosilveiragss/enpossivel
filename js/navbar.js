@@ -1,27 +1,26 @@
+import * as auth from "./auth.js";
 import * as utils from "./utils.js";
 
-document.addEventListener("DOMContentLoaded", async function () {
-    utils.genLoginCookie();
-
-    const navBar = `
-        <div class="nav-bar">
-            <div class="logo">
-            <img src="/public/logo.png" alt="Logo" />
-            </div>
-
-            <div class="search-bar">
-            <input
-                type="text"
-                class="search-bar-input"
-                placeholder="Buscar Produto"
-            />
-            </div>
-
-            <div class="hamburger-menu">
-            <i class="fa fa-bars"></i>
-            </div>
+export async function genNavbar() {
+    const navBarHTML = `
+    <div class="nav-bar">
+        <div class="logo">
+        <img src="/public/logo.png" alt="Logo" />
         </div>
-    `;
+
+        <div class="search-bar">
+        <input
+            type="text"
+            class="search-bar-input"
+            placeholder="Buscar Produto"
+        />
+        </div>
+
+        <div class="hamburger-menu">
+        <i class="fa fa-bars"></i>
+        </div>
+    </div>
+`;
 
     const pages = [
         { name: "Produtos", url: "/pages/index.html" },
@@ -30,18 +29,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const buttons = [];
 
-    const role = await utils.getAccountRole();
-
+    const role = await auth.getAccountRole();
     switch (role) {
         case "anon":
             buttons.push({
                 name: "Bater Ponto",
-                id:"login-btn",
+                id: "login-btn",
                 onclick: () => (window.location.href = "/pages/login.html"),
             });
             buttons.push({
                 name: "Registrar Crachá",
-                id:"register-btn",
+                id: "register-btn",
                 onclick: () => (window.location.href = "/pages/register.html"),
             });
             break;
@@ -62,24 +60,24 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     const navMenu = `
-        <div class="nav-menu">
-            <ul>
-                ${pages
-                    .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
-                    .join("")}
-                <li>
-                ${buttons
-                    .map(
-                        (b) =>
-                            `<button class="green-btn" id="${b.id}">${b.name}</button>`
-                    )
-                    .join("")}
-                </li>
-            </ul>
-        </div>
-    `;
+    <div class="nav-menu">
+        <ul>
+            ${pages
+            .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
+            .join("")}
+            <li>
+            ${buttons
+            .map(
+                (b) =>
+                    `<button class="green-btn" id="${b.id}">${b.name}</button>`
+            )
+            .join("")}
+            </li>
+        </ul>
+    </div>
+`;
 
-    document.body.insertAdjacentHTML("afterbegin", navBar);
+    document.body.insertAdjacentHTML("afterbegin", navBarHTML);
     document.body.insertAdjacentHTML("beforeend", navMenu);
 
     document.querySelectorAll("button").forEach((button) => {
@@ -115,4 +113,4 @@ document.addEventListener("DOMContentLoaded", async function () {
         utils.deleteAllCookies();
         window.location.href = "/pages/";
     }
-});
+}

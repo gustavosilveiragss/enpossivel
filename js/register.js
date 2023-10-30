@@ -1,3 +1,4 @@
+import * as auth from "./auth.js";
 import * as utils from "./utils.js";
 
 const form = document.querySelector("form");
@@ -12,7 +13,7 @@ form.addEventListener("submit", async (event) => {
         return;
     }
 
-    formData.set("account_id", utils.getAccountToken());
+    formData.set("account_id", auth.getAccountToken());
 
     const response = await fetch("/php/insert_registered_account.php", {
         method: "POST",

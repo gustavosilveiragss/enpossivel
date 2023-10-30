@@ -1,3 +1,4 @@
+import * as auth from "./auth.js";
 import * as utils from "./utils.js";
 
 window.onload = create_product_cards();
@@ -38,11 +39,11 @@ async function create_product_cards() {
                 },
                 method: "POST",
                 body: JSON.stringify({
-                    account_id: utils.getAccountToken(),
+                    account_id: auth.getAccountToken(),
                     product_id: id,
                 }),
             });
-            utils.showNotification("Produto adicionado ao caldeirão!");
+            utils.showNotification(`${productName.textContent} foi adicionado ao caldeirão.`);
         };
 
         productInfo.appendChild(productName);
