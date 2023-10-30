@@ -1,6 +1,6 @@
 export async function genLoginCookie() {
     if (document.cookie.indexOf("accountId") >= 0) {
-        return document.cookie.split("=")[1];
+        return;
     }
 
     const response = await fetch("/php/select_last_account_id.php");
@@ -23,8 +23,6 @@ export async function genLoginCookie() {
             account_id: accId,
         }),
     });
-
-    return accId;
 }
 
 export function getAccountToken() {
