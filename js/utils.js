@@ -31,3 +31,8 @@ export function showNotification(message) {
         notificationContainer.classList.remove("show");
     }, 3000);
 }
+
+export function databaseIdFromElementId(element) {
+    // we store ids in the format `product-1` or `deleteproduct-1`
+    return element.id.split("-")[1];
+}
