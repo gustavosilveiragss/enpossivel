@@ -18,10 +18,10 @@ async function create_cart_table() {
         return;
     }
 
-    let cartTable = document.querySelector(".cart-table");
+    const cartTable = document.querySelector(".cart-table");
     const cartIsEmpty = () => {
         cartTable.innerHTML = "";
-        let cartTableWrapper = document.querySelector(".cart-table-wrapper");
+        const cartTableWrapper = document.querySelector(".cart-table-wrapper");
         cartTableWrapper.textContent = "O caldeirão está vazio!";
     };
 
@@ -31,14 +31,14 @@ async function create_cart_table() {
         return;
     }
 
-    let headerRow = document.createElement("tr");
+    const headerRow = document.createElement("tr");
     cartTable.appendChild(headerRow);
 
-    let nameHeader = document.createElement("th");
+    const nameHeader = document.createElement("th");
     nameHeader.innerText = "Nome";
-    let priceHeader = document.createElement("th");
+    const priceHeader = document.createElement("th");
     priceHeader.innerText = "Preço";
-    let quantityHeader = document.createElement("th");
+    const quantityHeader = document.createElement("th");
     quantityHeader.innerText = "Quantidade";
 
     headerRow.appendChild(nameHeader);
@@ -46,11 +46,11 @@ async function create_cart_table() {
     headerRow.appendChild(quantityHeader);
     json.forEach((product) => {
         // fill the table with the data in `product`
-        let cartRow = document.createElement("tr");
-        let name = document.createElement("td");
-        let price = document.createElement("td");
-        let quantity = document.createElement("td");
-        let deleteProduct = document.createElement("td");
+        const cartRow = document.createElement("tr");
+        const name = document.createElement("td");
+        const price = document.createElement("td");
+        const quantity = document.createElement("td");
+        const deleteProduct = document.createElement("td");
 
         name.innerText = product.title;
         price.innerText = product.price;
@@ -58,7 +58,7 @@ async function create_cart_table() {
 
         const id = `deleteproduct-${product.product_id}`;
 
-        let button = document.createElement("button");
+        const button = document.createElement("button");
         button.className = "remove-product-button";
         button.id = id;
         button.innerHTML = "<span class='fa fa-trash'></span>";
