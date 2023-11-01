@@ -28,8 +28,6 @@ export async function getAccountRole() {
     const accId = getAccountToken();
     if (!accId) return null;
 
-    console.log(accId);
-
     const response = await fetch("/php/is_logged_in.php", {
         headers: {
             "Content-Type": "application/json",

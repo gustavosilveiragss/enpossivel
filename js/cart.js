@@ -65,7 +65,7 @@ async function create_cart_table() {
         deleteProduct.appendChild(button);
 
         button.onclick = async () => {
-            const id = databaseIdFromElementId(button);
+            const id = utils.databaseIdFromElementId(button);
             const response = await fetch("/php/delete_cart_item.php", {
                 method: "POST",
                 body: JSON.stringify({
