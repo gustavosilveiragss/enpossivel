@@ -18,7 +18,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    http_response_code(409);
+    http_response_code(500);
     echo json_encode(["error" => "Já tem crachá com esse email!"]);
     $db->close();
     die();

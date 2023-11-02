@@ -33,7 +33,7 @@ async function create_product_cards() {
         productButton.textContent = "Adicionar ao caldeirão";
         productButton.onclick = async () => {
             const id = utils.databaseIdFromElementId(productButton);
-            await fetch("/php/insert_cart_item.php", {
+            await fetch("/php/insert_cart_product.php", {
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -34,10 +34,10 @@ VALUES (
 
 INSERT INTO cart (account_id) VALUES (1), (2);
 
--- Sample data for the Cart_Item table
+-- Sample data for the cart_product table
 
 INSERT INTO
-    cart_item (cart_id, product_id)
+    cart_product (cart_id, product_id)
 VALUES (1, 1), (2, 2);
 
 -- Sample data for the Payment_Method table

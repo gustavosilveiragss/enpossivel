@@ -14,12 +14,12 @@ $cart_query_result = $db->query("SELECT cart_id FROM cart WHERE account_id = $ac
 $cart_id = $cart_query_result->fetch_assoc()["cart_id"];
 
 $query = $db->query("SELECT p.*, COUNT(*) AS quantity
-FROM cart
-JOIN cart_item ci ON ci.cart_id = $cart_id
-JOIN product p ON p.product_id = ci.product_id
-WHERE cart.cart_id = $cart_id
+FROM cart c
+JOIN cart_product cp ON cp.cart_id = $cart_id
+JOIN product p ON p.product_id = cp.product_id
+WHERE c.cart_id = $cart_id
 GROUP BY p.product_id
-ORDER BY MIN(ci.created_at) ASC");
+ORDER BY MIN(cp.created_at) ASC");
 $response = $query->fetch_all(MYSQLI_ASSOC);
 
 echo json_encode($response);

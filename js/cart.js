@@ -4,7 +4,7 @@ import * as utils from "./utils.js";
 window.onload = create_cart_table();
 
 async function create_cart_table() {
-    const response = await fetch("/php/select_cart_item.php", {
+    const response = await fetch("/php/select_cart_product.php", {
         headers: {
             "Content-Type": "application/json",
         },
@@ -66,7 +66,7 @@ async function create_cart_table() {
 
         button.onclick = async () => {
             const id = utils.databaseIdFromElementId(button);
-            const response = await fetch("/php/delete_cart_item.php", {
+            const response = await fetch("/php/delete_cart_product.php", {
                 method: "POST",
                 body: JSON.stringify({
                     product_id: id,

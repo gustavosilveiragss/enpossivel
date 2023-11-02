@@ -18,8 +18,8 @@ cart:
     created_at
     user_id (Foreign Key, links to User)
 
-cart_item:
-    cart_item_id (Primary Key)
+cart_product:
+    cart_product_id (Primary Key)
     created_at
     cart_id (Foreign Key, links to Cart)
     product_id (Foreign Key, links to Product)

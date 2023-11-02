@@ -3,7 +3,7 @@
   justify-content: center;
 }
 
-.auth-form {
+.form {
   width: 30%;
   margin: 20px auto;
   padding: 20px;
@@ -35,7 +35,7 @@ h2 {
 }
 
 @media screen and (max-width: 768px) {
-  .auth-form {
+  .form {
     width: 100%;
   }
 }

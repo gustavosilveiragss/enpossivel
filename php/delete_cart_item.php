@@ -13,16 +13,16 @@ $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB
 $cart_query_result =  $db->query("SELECT cart_id FROM cart WHERE account_id = $account_id LIMIT 1");
 $cart_id = $cart_query_result->fetch_assoc()["cart_id"];
 
-$query = $db->query("DELETE FROM cart_item ci
-WHERE ci.cart_id = $cart_id
-AND ci.product_id = $body->product_id
-AND ci.created_at = (
+$query = $db->query("DELETE FROM cart_product cp
+WHERE cp.cart_id = $cart_id
+AND cp.product_id = $body->product_id
+AND cp.created_at = (
     # https://stackoverflow.com/a/12969601
     SELECT newest_item FROM (
-        SELECT MAX(ci2.created_at) as newest_item
-        FROM cart_item ci2
-        WHERE ci2.cart_id = $cart_id
-        AND ci2.product_id = $body->product_id
+        SELECT MAX(cp2.created_at) as newest_item
+        FROM cart_product cp2
+        WHERE cp2.cart_id = $cart_id
+        AND cp2.product_id = $body->product_id
 ) dummy)
 LIMIT 1");
 

@@ -13,7 +13,7 @@ $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB
 $cart_query_result =  $db->query("SELECT cart_id FROM cart WHERE account_id = $account_id LIMIT 1");
 $cart_id = $cart_query_result->fetch_assoc()["cart_id"];
 
-$db->query("INSERT INTO cart_item (cart_id, product_id) VALUES($cart_id, $product_id)");
+$db->query("INSERT INTO cart_product (cart_id, product_id) VALUES($cart_id, $product_id)");
 
 $db->commit();
 $db->close();
