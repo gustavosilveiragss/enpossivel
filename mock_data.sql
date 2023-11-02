@@ -45,13 +45,3 @@ VALUES (1, 1), (2, 2);
 INSERT INTO
     payment_method (name)
 VALUES ('Credit Card'), ('Debit Card');
-
--- Sample data for the Order table
-
-INSERT INTO `order`(account_id) VALUES (1), (2);
-
--- Sample data for the Order_Item table
-
-INSERT INTO
-    order_item (order_id, product_id)
-VALUES (1, 1), (2, 2);
