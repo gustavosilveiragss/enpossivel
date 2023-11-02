@@ -1,9 +1,10 @@
 import * as auth from "./auth.js";
 import * as utils from "./utils.js";
+import * as globals from "./globals.js";
 
-window.onload = create_cart_table();
+globals.push_on_load_hook(genCartPage);
 
-async function create_cart_table() {
+async function genCartPage() {
     const response = await fetch("/php/select_cart_product.php", {
         headers: {
             "Content-Type": "application/json",
@@ -19,9 +20,10 @@ async function create_cart_table() {
     }
 
     const cartTable = document.querySelector(".product-table");
+    const cartTableWrapper = document.querySelector(".product-table-wrapper");
+    const checkoutButton = document.querySelector("#checkout-button");
     const cartIsEmpty = () => {
         cartTable.innerHTML = "";
-        const cartTableWrapper = document.querySelector(".product-table-wrapper");
         cartTableWrapper.textContent = "O caldeirão está vazio!";
     };
 
@@ -56,12 +58,10 @@ async function create_cart_table() {
         price.innerText = product.price;
         quantity.innerText = product.quantity;
 
-        const id = `deleteproduct-${product.product_id}`;
-
         const button = document.createElement("button");
+        button.id = `deleteproduct-${product.product_id}`;
         button.className = "remove-product-button";
-        button.id = id;
-        button.innerHTML = "<span class='fa fa-trash'></span>";
+        button.innerHTML = `<span class='fa fa-trash'></span>`;
         deleteProduct.appendChild(button);
 
         button.onclick = async () => {

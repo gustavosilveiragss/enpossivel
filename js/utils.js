@@ -10,9 +10,7 @@ export function deleteAllCookies() {
 let notificationTimeoutHandle = null;
 
 export function showNotification(message) {
-    const notificationContainer = document.querySelector(
-        ".notification-container"
-    );
+    const notificationContainer = document.querySelector(".notification-container");
 
     notificationContainer.textContent = message;
     if (notificationContainer.classList.contains("show")) {
