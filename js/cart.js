@@ -18,10 +18,10 @@ async function create_cart_table() {
         return;
     }
 
-    const cartTable = document.querySelector(".cart-table");
+    const cartTable = document.querySelector(".product-table");
     const cartIsEmpty = () => {
         cartTable.innerHTML = "";
-        const cartTableWrapper = document.querySelector(".cart-table-wrapper");
+        const cartTableWrapper = document.querySelector(".product-table-wrapper");
         cartTableWrapper.textContent = "O caldeirão está vazio!";
     };
 
@@ -78,7 +78,7 @@ async function create_cart_table() {
                 return;
             }
 
-            utils.showNotification(`${nameHeader.textContent} foi removido do caldeirão`);
+            utils.showNotification(`${name.textContent} foi removido do caldeirão`);
 
             const new_quantity = Number(quantity.innerText) - 1;
             if (new_quantity === 0) {

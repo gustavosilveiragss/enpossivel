@@ -2,7 +2,8 @@ html,
 body {
   height: 100%;
 }
-.cart-table {
+
+.product-table {
   align-items: center;
   border-spacing: 20px;
   box-shadow: 0 1px 2px #69696969;
@@ -12,7 +13,7 @@ body {
   border: 1px solid #ddd;
 }
 
-.cart-table-wrapper {
+.product-table-wrapper {
   display: flex;
   justify-content: center;
   padding-top: 20px;

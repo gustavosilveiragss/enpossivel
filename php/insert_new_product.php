@@ -2,11 +2,9 @@
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$path = '/res/images/' . $_FILES["image"]['name'];
+$path = '/res/images/' . uniqid() . "." . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
 
-if (move_uploaded_file($_FILES["image"]["tmp_name"], __DIR__ . "/.." . $path)) {
-    echo json_encode($_FILES["image"]);
-} else {
+if (!move_uploaded_file($_FILES["image"]["tmp_name"], __DIR__ . "/.." . $path)) {
     http_response_code(500);
     echo json_encode(["error" => "Algo deu errado. Verifique as permissões da pasta de imagens."]);
     $db->close();

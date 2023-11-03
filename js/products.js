@@ -4,7 +4,7 @@ import * as utils from "./utils.js";
 window.onload = create_product_cards();
 
 async function create_product_cards() {
-    const response = await fetch("/php/select_product.php");
+    const response = await fetch("/php/select_product_listing.php");
     if (!response || !response.ok)
         return;
 

@@ -50,9 +50,9 @@ export async function genNavbar() {
                 onclick: () => (window.location.href = "/pages/admin/register-product.html"),
             });
             buttons.push({
-                name: "Excluir Produto",
-                id: "delete-product-btn",
-                onclick: () => (window.location.href = "/pages/admin/delete-product.html"),
+                name: "Gerenciar Produtos",
+                id: "manage-products-btn",
+                onclick: () => (window.location.href = "/pages/admin/manage-products.html"),
             });
         default:
             buttons.push({ name: "Logout", id: "logout-btn", onclick: logout });
