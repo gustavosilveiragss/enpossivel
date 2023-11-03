@@ -22,7 +22,7 @@ form.addEventListener("submit", async (event) => {
 
     if (account.account_id != auth.getAccountToken()) {
         utils.deleteAllCookies();
-        document.cookie = "accountId=" + account.account_id;
+        document.cookie = `accountId=${account.account_id};path=/;`;
     }
 
     utils.showNotification("Ponto batido com sucesso, vai preencher o caldeirão!");

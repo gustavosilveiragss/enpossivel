@@ -13,37 +13,32 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script src="/js/register-product.js" type="module"></script>
     <script src="/js/utils.js" type="module"></script>
     <script src="/js/globals.js" type="module"></script>
-    <script defer src="/js/register.js" type="module"></script>
     <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
   </head>
   <body>
-    <!-- PRODUCT REGISTATION -->
-    <div class="auth-wrapper">
+    <!-- PRODUCT REGISTRATION -->
+    <div class="form-wrapper">
       <div class="form container">
         <h2>Registrar Produto</h2>
         <form>
           <div class="form-group">
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="name" required />
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required />
           </div>
           <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <label for="price">Preço:</label>
+            <input type="number" id="price" name="price" placeholder="R$ 100,00" required />
           </div>
           <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
+            <label for="image">Imagem:</label>
+            <input type="file" id="image" name="image" accept="image/*" required />
+          </div>          
           <div class="form-group">
-            <label for="confirm-password">Confirmar Senha:</label>
-            <input
-              type="password"
-              id="confirm-password"
-              name="confirm-password"
-              required
-            />
+            <label for="stock">Estoque:</label>
+            <input type="number" id="stock" name="stock" value="1" required />
           </div>
           <div class="btn-wrapper">
             <button class="green-btn" type="submit">Registrar</button>

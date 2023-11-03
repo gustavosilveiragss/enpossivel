@@ -15,7 +15,7 @@ export async function genLoginCookie() {
     }
 
     const data = await response.json();
-    document.cookie = `accountId=${data.new_account_id}`;
+    document.cookie = `accountId=${data.new_account_id};path=/;`;
 }
 
 export function getAccountToken() {
