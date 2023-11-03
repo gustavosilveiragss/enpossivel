@@ -7,7 +7,10 @@ $path = '/res/images/' . $_FILES["image"]['name'];
 if (move_uploaded_file($_FILES["image"]["tmp_name"], __DIR__ . "/.." . $path)) {
     echo json_encode($_FILES["image"]);
 } else {
-    echo "Algo deu errado. Verifique as permissões da pasta de imagens.";
+    http_response_code(500);
+    echo json_encode(["error" => "Algo deu errado. Verifique as permissões da pasta de imagens."]);
+    $db->close();
+    die();
 }
 
 $env_file = file_get_contents('../.env');

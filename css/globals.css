@@ -14,7 +14,8 @@ input {
   font-size: 16px;
   background-color: #fff;
   transition: all 0.3s ease;
-  width: -moz-available;
+  width: -moz-available; /* Firefox */
+  width: -webkit-fill-available; /* Chrome */
 }
 
 input:focus {
