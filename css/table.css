@@ -35,3 +35,8 @@ body {
   background-color: #fff;
   color: #ff6666;
 }
+
+.table-input {
+  width: 80px;
+  text-align: center;
+}

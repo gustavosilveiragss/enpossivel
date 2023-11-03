@@ -19,7 +19,9 @@ async function create_product_table() {
     const productTable = document.querySelector(".product-table");
     const noProducts = () => {
         productTable.innerHTML = "";
-        const productTableWrapper = document.querySelector(".product-table-wrapper");
+        const productTableWrapper = document.querySelector(
+            ".product-table-wrapper"
+        );
         productTableWrapper.textContent = "Sem produtos registrados";
     };
 
@@ -32,43 +34,23 @@ async function create_product_table() {
     const headerRow = document.createElement("tr");
     productTable.appendChild(headerRow);
 
-    const nameHeader = document.createElement("th");
-    nameHeader.innerText = "Nome";
+    const titleHeader = document.createElement("th");
+    titleHeader.innerText = "Título";
     const priceHeader = document.createElement("th");
     priceHeader.innerText = "Preço";
     const stockHeader = document.createElement("th");
     stockHeader.innerText = "Estoque";
 
-    headerRow.appendChild(nameHeader);
+    headerRow.appendChild(titleHeader);
     headerRow.appendChild(priceHeader);
     headerRow.appendChild(stockHeader);
 
     json.forEach((product) => {
-        // fill the table with the data in `product`
-        const productRow = document.createElement("tr");
-        const name = document.createElement("td");
-        const price = document.createElement("td");
-        const stock = document.createElement("td");
-        const deleteProduct = document.createElement("td");
-
-        name.innerText = product.title;
-        price.innerText = product.price;
-        stock.innerText = product.stock;
-
-        const id = `deleteproduct-${product.product_id}`;
-
-        const button = document.createElement("button");
-        button.className = "remove-product-button";
-        button.id = id;
-        button.innerHTML = "<span class='fa fa-trash'></span>";
-        deleteProduct.appendChild(button);
-
-        button.onclick = async () => {
-            const id = utils.databaseIdFromElementId(button);
+        async function deleteProduct() {
             const response = await fetch("/php/delete_product.php", {
                 method: "POST",
                 body: JSON.stringify({
-                    product_id: id
+                    product_id: product.product_id,
                 }),
             });
 
@@ -77,7 +59,7 @@ async function create_product_table() {
                 return;
             }
 
-            utils.showNotification(`${name.textContent} foi excluído`);
+            utils.showNotification(`${product.title} foi excluído`);
 
             productTable.removeChild(productRow);
 
@@ -86,13 +68,93 @@ async function create_product_table() {
                 noProducts();
                 return;
             }
+        }
+
+        // fill the table with the data in `product`
+        const productRow = document.createElement("tr");
+        const title = document.createElement("td");
+        const price = document.createElement("td");
+        const stock = document.createElement("td");
+        const deleteProductBtn = document.createElement("td");
+
+        const titleInput = document.createElement("input");
+        titleInput.className = "table-input";
+        titleInput.type = "text";
+        titleInput.value = product.title;
+        titleInput.onkeyup = () => {
+            inputChange("title");
         };
 
-        productRow.appendChild(name);
+        title.appendChild(titleInput);
+
+        const priceInput = document.createElement("input");
+        priceInput.className = "table-input";
+        priceInput.type = "number";
+        priceInput.value = product.price;
+        priceInput.onkeyup = () => {
+            inputChange("price");
+        };
+
+        price.appendChild(priceInput);
+
+        const stockInput = document.createElement("input");
+        stockInput.className = "table-input";
+        stockInput.type = "number";
+        stockInput.value = product.stock;
+        stockInput.onkeyup = () => {
+            inputChange("stock");
+        };
+
+        stock.appendChild(stockInput);
+
+        const button = document.createElement("button");
+        button.className = "remove-product-button";
+        button.innerHTML = "<span class='fa fa-trash'></span>";
+        deleteProductBtn.appendChild(button);
+        button.onclick = deleteProduct;
+
+        productRow.appendChild(title);
         productRow.appendChild(price);
         productRow.appendChild(stock);
-        productRow.appendChild(deleteProduct);
+        productRow.appendChild(deleteProductBtn);
 
         productTable.appendChild(productRow);
+
+        let timeoutId;
+        function inputChange(changed) {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+
+            timeoutId = setTimeout(() => {
+                updateProduct(changed);
+            }, 300);
+        }
+
+        async function updateProduct(changed) {
+            switch (changed) {
+                case "title":
+                    product.title = titleInput.value;
+                    break;
+                case "price":
+                    product.price = parseFloat(priceInput.value);
+                    break;
+                case "stock":
+                    product.stock = parseFloat(stockInput.value);
+                    break;
+            }
+
+            const response = await fetch("/php/update_product.php", {
+                method: "POST",
+                body: JSON.stringify(product),
+            });
+
+            if (!response || !response.ok) {
+                utils.showNotification("Erro ao atualizar produto");
+                return;
+            }
+
+            utils.showNotification(`${product.title} foi atualizado`);
+        }
     });
 }
