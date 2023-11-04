@@ -15,7 +15,7 @@ form.addEventListener("submit", async (event) => {
 
     formData.set("account_id", auth.getAccountToken());
 
-    const response = await fetch("/php/insert_registered_account.php", {
+    const response = await fetch("/php/update_registered_account.php", {
         method: "POST",
         body: formData,
     });

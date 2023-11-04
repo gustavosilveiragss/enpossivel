@@ -14,7 +14,7 @@ CREATE TABLE product (
     title VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     img_path VARCHAR(255) NULL,
-    stock INT NOT NULL DEFAULT 0,
+    stock INT NOT NULL DEFAULT 1,
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
@@ -39,6 +39,10 @@ CREATE TABLE payment_method (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     name VARCHAR(255) NOT NULL
 );
+
+INSERT INTO
+    payment_method (name)
+VALUES ('Credit Card'), ('Debit Card');
 
 CREATE TABLE card (
     card_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
