@@ -6,3 +6,15 @@
   display: flex;
   gap: 20px;
 }
+
+@media screen and (min-width: 768px) {
+  #date-container > input {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #date-container {
+    flex-direction: column;
+  }
+}
