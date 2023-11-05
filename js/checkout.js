@@ -68,6 +68,22 @@ async function genCheckoutPage() {
         cartTable.appendChild(cartRow);
     });
 
+    const cpfInput = document.querySelector("#cpf");
+    cpfInput.oninput = () => {
+        //https://pt.stackoverflow.com/a/290510
+        const v = cpfInput.value;
+        
+        if (isNaN(v[v.length - 1])) {
+            // allow only numbers
+            cpfInput.value = v.substring(0, v.length - 1);
+            return;
+        }
+    
+        cpfInput.setAttribute("maxlength", "14");
+        if (v.length == 3 || v.length == 7) cpfInput.value += ".";
+        else if (v.length == 11) cpfInput.value += "-";
+    };
+
     const paymentMethodData = document.querySelector(".payment-method-data");
 
     const paymentMethod = document.querySelector("[name=payment-method]");
@@ -117,13 +133,71 @@ async function genCheckoutPage() {
                     formGroup.appendChild(formInput);
 
                     paymentMethodData.appendChild(formGroup);
+
+                    if (type === "text" && (name === "card-number" || name === "card-cvv")) {
+                        formInput.addEventListener("input", function () {
+                            this.value = this.value.replace(/\D/g, '').trim();
+                            if (name === "card-number") {
+                                this.value = this.value.replace(/(\d{4})/g, '$1 ').trim().slice(0, 19);
+                            } else if (name === "card-cvv") {
+                                this.value = this.value.slice(0, 3);
+                            }
+                        });
+                    }
+                }
+
+                function makeMonthFormInput() {
+                    const formGroup = document.createElement("div");
+                    formGroup.classList.add("form-group");
+
+                    const formLabel = document.createElement("label");
+                    formLabel.htmlFor = "card-expiration-date";
+                    formLabel.textContent = "Data de Validade";
+
+                    const dateContainer = document.createElement("div");
+                    dateContainer.id = "date-container";
+                    dateContainer.name = "date-container";
+                    
+                    const formInputMonth = document.createElement("input");
+                    formInputMonth.id = "card-expiration-date-month";
+                    formInputMonth.name = "card-expiration-date-month";
+                    formInputMonth.required = true;
+                    formInputMonth.type = "number";
+                    formInputMonth.min = 1;
+                    formInputMonth.max = 12;
+                    formInputMonth.maxLength = 2;
+                    formInputMonth.placeholder = "MM";
+
+                    const formInputYear = document.createElement("input");
+                    formInputYear.id = "card-expiration-date-year";
+                    formInputYear.name = "card-expiration-date-year";
+                    formInputYear.required = true;
+                    formInputYear.type = "number";
+                    formInputMonth.maxLength = 2;
+                    formInputYear.min = 23;
+                    formInputYear.placeholder = "YY";
+                    
+                    dateContainer.appendChild(formInputMonth);
+                    dateContainer.appendChild(formInputYear);
+                    
+                    dateContainer.childNodes.forEach(e => {
+                        e.addEventListener("input", function () {
+                            this.value = this.value.replace(/\D/g, '').trim().slice(0, 2);
+                        });
+                    });
+                    
+                    formGroup.appendChild(formLabel);
+                    formGroup.appendChild(dateContainer);
+
+                    paymentMethodData.appendChild(formGroup);
                 }
 
                 makeHeading("Dados do cartão:");
                 makeFormInput("Dono do cartão:", "card-owner", "text");
                 makeFormInput("Número do cartão:", "card-number", "text");
-                makeFormInput("Data de validade:", "card-expiration-date", "date");
+                makeMonthFormInput();
                 makeFormInput("Código de segurança:", "card-cvv", "text");
+
                 break;
         }
     };

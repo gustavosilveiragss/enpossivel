@@ -1,7 +1,7 @@
 export function deleteAllCookies() {
     const cookies = document.cookie.split(";");
 
-    cookies.forEach(cookie => {
+    cookies.forEach((cookie) => {
         const name = cookie.split("=")[0];
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
     });
@@ -10,7 +10,9 @@ export function deleteAllCookies() {
 let notificationTimeoutHandle = null;
 
 export function showNotification(message) {
-    const notificationContainer = document.querySelector(".notification-container");
+    const notificationContainer = document.querySelector(
+        ".notification-container"
+    );
 
     notificationContainer.textContent = message;
     if (notificationContainer.classList.contains("show")) {
@@ -21,7 +23,6 @@ export function showNotification(message) {
         }, 3000);
         return;
     }
-
 
     notificationContainer.classList.add("show");
 
