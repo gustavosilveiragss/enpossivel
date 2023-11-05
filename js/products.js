@@ -11,7 +11,7 @@ async function create_product_cards() {
     const json = await response.json();
 
     const productsGrid = document.querySelector(".products-grid");
-    json.forEach((product) => {
+    json.forEach(product => {
         const productCard = document.createElement("div");
         productCard.classList.add("product-card");
         productCard.classList.add("container");
@@ -34,9 +34,7 @@ async function create_product_cards() {
         productButton.onclick = async () => {
             const id = utils.databaseIdFromElementId(productButton);
             await fetch("/php/insert_cart_product.php", {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { "Content-Type": "application/json", },
                 method: "POST",
                 body: JSON.stringify({
                     account_id: auth.getAccountToken(),

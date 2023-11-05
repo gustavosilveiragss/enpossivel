@@ -15,7 +15,7 @@ function loaded_register_product() {
     const fileInput = document.querySelector("#image");
     const fileUpload = document.querySelector(".file-upload");
 
-    fileInput.addEventListener("change", (event) => {
+    fileInput.addEventListener("change", event => {
         const file = event.target.files[0];
         if (file) {
             fileUpload.querySelector(".fa").classList.remove("fa-upload");
@@ -24,17 +24,17 @@ function loaded_register_product() {
         }
     });
 
-    fileUpload.addEventListener("dragover", (event) => {
+    fileUpload.addEventListener("dragover", event => {
         event.preventDefault();
         fileUpload.style.borderColor = "#aaa";
     });
 
-    fileUpload.addEventListener("dragleave", (event) => {
+    fileUpload.addEventListener("dragleave", event => {
         event.preventDefault();
         fileUpload.style.borderColor = "#ccc";
     });
 
-    fileUpload.addEventListener("drop", (event) => {
+    fileUpload.addEventListener("drop", event => {
         event.preventDefault();
         fileUpload.style.borderColor = "#ccc";
         const file = event.dataTransfer.files[0];
@@ -46,7 +46,7 @@ function loaded_register_product() {
         }
     });
 
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async e => {
         e.preventDefault();
 
         const formData = new FormData(form);

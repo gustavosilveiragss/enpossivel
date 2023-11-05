@@ -6,9 +6,7 @@ globals.push_on_load_hook(genCartPage);
 
 async function genCartPage() {
     const response = await fetch("/php/select_cart_product.php", {
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json", },
         method: "POST",
         body: JSON.stringify({
             account_id: auth.getAccountToken(),
@@ -21,7 +19,6 @@ async function genCartPage() {
 
     const cartTable = document.querySelector(".product-table");
     const cartTableWrapper = document.querySelector(".product-table-wrapper");
-    const checkoutButton = document.querySelector("#checkout-button");
     const cartIsEmpty = () => {
         cartTable.innerHTML = "";
         cartTableWrapper.textContent = "O caldeirão está vazio!";
@@ -46,7 +43,7 @@ async function genCartPage() {
     headerRow.appendChild(nameHeader);
     headerRow.appendChild(priceHeader);
     headerRow.appendChild(quantityHeader);
-    json.forEach((product) => {
+    json.forEach(product => {
         // fill the table with the data in `product`
         const cartRow = document.createElement("tr");
         const name = document.createElement("td");
@@ -62,11 +59,13 @@ async function genCartPage() {
         button.id = `deleteproduct-${product.product_id}`;
         button.className = "remove-product-button";
         button.innerHTML = `<span class='fa fa-trash'></span>`;
+
         deleteProduct.appendChild(button);
 
         button.onclick = async () => {
             const id = utils.databaseIdFromElementId(button);
             const response = await fetch("/php/delete_cart_product.php", {
+                headers: { "Content-Type": "application/json", },
                 method: "POST",
                 body: JSON.stringify({
                     product_id: id,
@@ -80,16 +79,20 @@ async function genCartPage() {
 
             utils.showNotification(`${name.textContent} foi removido do caldeirão`);
 
-            const new_quantity = Number(quantity.innerText) - 1;
-            if (new_quantity === 0) {
+            const newQuantity = Number(quantity.innerText) - 1;
+
+            const totalPrice = document.querySelector("#total-price");
+            const currentTotalPrice = Number(totalPrice.innerText);
+            totalPrice.innerText = (currentTotalPrice - Number(price.innerText)).toFixed(2);
+
+            if (newQuantity === 0) {
                 cartTable.removeChild(cartRow);
                 // there will always be at least one row because of the headers
                 if (cartTable.rows.length === 1) {
                     cartIsEmpty();
-                    return;
                 }
             } else {
-                quantity.innerText = new_quantity;
+                quantity.innerText = newQuantity;
             }
         };
 
@@ -100,4 +103,33 @@ async function genCartPage() {
 
         cartTable.appendChild(cartRow);
     });
+
+    let totalPrice = json.reduce((total, product) => total + (product.price * product.quantity), 0);
+    const totalPriceContainer = document.createElement("div");
+    totalPriceContainer.classList.add("container");
+    totalPriceContainer.style.width = "max-content";
+    totalPriceContainer.innerHTML = `<span>Valor Total: <b id="total-price">${totalPrice.toFixed(2)}</b></span>`;
+
+    cartTableWrapper.appendChild(totalPriceContainer);
+
+    const checkoutButton = document.createElement("button");
+    checkoutButton.classList.add("green-btn");
+    checkoutButton.id = "checkout-btn";
+    checkoutButton.textContent = "Fazer pedido";
+    checkoutButton.onclick = async () => {
+        const totalPrice = document.querySelector("#total-price");
+        const currentTotalPrice = Number(totalPrice.innerText);
+        console.log(currentTotalPrice);
+        await fetch("/php/insert_new_order.php", {
+            headers: { "Content-Type": "application/json", },
+            method: "POST",
+            body: JSON.stringify({
+                account_id: auth.getAccountToken(),
+                total_price: currentTotalPrice,
+            }),
+        });
+        window.location.href = "/pages/checkout.html";
+    };
+
+    cartTableWrapper.appendChild(checkoutButton);
 }

@@ -63,12 +63,12 @@ export async function genNavbar() {
     <div class="nav-menu">
         <ul>
             ${pages
-            .map((p) => `<li><a href="${p.url}">${p.name}</a></li>`)
+            .map(p => `<li><a href="${p.url}">${p.name}</a></li>`)
             .join("")}
             <li>
             ${buttons
             .map(
-                (b) =>
+                b =>
                     `<button class="green-btn" id="${b.id}">${b.name}</button>`
             )
             .join("")}
@@ -80,9 +80,9 @@ export async function genNavbar() {
     document.body.insertAdjacentHTML("afterbegin", navBarHTML);
     document.body.insertAdjacentHTML("beforeend", navMenu);
 
-    document.querySelectorAll("button").forEach((button) => {
+    document.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", () => {
-            const btn = buttons.find((b) => b.id === button.id);
+            const btn = buttons.find(b => b.id === button.id);
             if (btn) {
                 btn.onclick();
             }
@@ -100,7 +100,7 @@ export async function genNavbar() {
         optionsBar.classList.toggle("active");
     });
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", event => {
         const clickOnBar = optionsBar.contains(event.target);
         const clickOutside = hamburgerMenu.contains(event.target);
 

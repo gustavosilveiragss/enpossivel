@@ -45,9 +45,10 @@ async function create_product_table() {
     headerRow.appendChild(priceHeader);
     headerRow.appendChild(stockHeader);
 
-    json.forEach((product) => {
+    json.forEach(product => {
         async function deleteProduct() {
             const response = await fetch("/php/delete_product.php", {
+                headers: { "Content-Type": "application/json", },
                 method: "POST",
                 body: JSON.stringify({
                     product_id: product.product_id,
@@ -81,8 +82,8 @@ async function create_product_table() {
         titleInput.className = "table-input";
         titleInput.type = "text";
         titleInput.value = product.title;
-        titleInput.onkeyup = () => {
-            inputChange("title");
+        titleInput.onchange = async () => {
+            await inputChange("title");
         };
 
         title.appendChild(titleInput);
@@ -91,8 +92,8 @@ async function create_product_table() {
         priceInput.className = "table-input";
         priceInput.type = "number";
         priceInput.value = product.price;
-        priceInput.onkeyup = () => {
-            inputChange("price");
+        priceInput.onchange = async () => {
+            await inputChange("price");
         };
 
         price.appendChild(priceInput);
@@ -101,8 +102,8 @@ async function create_product_table() {
         stockInput.className = "table-input";
         stockInput.type = "number";
         stockInput.value = product.stock;
-        stockInput.onkeyup = () => {
-            inputChange("stock");
+        stockInput.onchange = async () => {
+            await inputChange("stock");
         };
 
         stock.appendChild(stockInput);
@@ -121,13 +122,13 @@ async function create_product_table() {
         productTable.appendChild(productRow);
 
         let timeoutId;
-        function inputChange(changed) {
+        async function inputChange(changed) {
             if (timeoutId) {
                 clearTimeout(timeoutId);
             }
 
-            timeoutId = setTimeout(() => {
-                updateProduct(changed);
+            timeoutId = setTimeout(async () => {
+                await updateProduct(changed);
             }, 300);
         }
 
@@ -145,6 +146,7 @@ async function create_product_table() {
             }
 
             const response = await fetch("/php/update_product.php", {
+                headers: { "Content-Type": "application/json", },
                 method: "POST",
                 body: JSON.stringify(product),
             });

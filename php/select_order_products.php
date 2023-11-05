@@ -6,18 +6,17 @@ $env_file = file_get_contents('../.env');
 $env = parse_ini_string($env_file);
 
 $body = json_decode(file_get_contents('php://input'));
-$account_id = $body->account_id;
-// INVARIANT: for every account there is a single cart
-$cart_id = $account_id;
+$order_id = $body->order_id;
 
 $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB_DATABASE"]);
 $query = $db->query("SELECT p.*, COUNT(*) AS quantity
-FROM cart c
-JOIN cart_product cp ON cp.cart_id = $cart_id
-JOIN product p ON p.product_id = cp.product_id
-WHERE c.cart_id = $cart_id
+FROM order_product op
+JOIN product p ON p.product_id = op.product_id
+WHERE op.order_id = $order_id
 GROUP BY p.product_id
-ORDER BY MIN(cp.created_at) ASC");
-$response = $query->fetch_all(MYSQLI_ASSOC);
+ORDER BY MIN(op.created_at) ASC");
 
+$response = $query->fetch_all(MYSQLI_ASSOC);
 echo json_encode($response);
+
+$db->close();

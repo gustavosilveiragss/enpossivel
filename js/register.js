@@ -3,11 +3,10 @@ import * as utils from "./utils.js";
 
 const form = document.querySelector("form");
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", async event => {
     event.preventDefault();
 
     const formData = new FormData(form);
-
     if (formData.get("password") !== formData.get("confirm-password")) {
         utils.showNotification("Senhas não coincidem");
         return;
@@ -21,12 +20,6 @@ form.addEventListener("submit", async (event) => {
     });
 
     if (!response || !response.ok) {
-        const json = await response.json();
-        if (json) {
-            utils.showNotification(json.error);
-            return;
-        }
-
         utils.showNotification("Registro do crachá deu errado!");
         return;
     }

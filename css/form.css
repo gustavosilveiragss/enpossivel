@@ -1,12 +1,13 @@
 .form-wrapper {
+  padding: 10px 20px;
   display: flex;
+  flex-flow: column;
+  align-items: center;
   justify-content: center;
 }
 
 .form {
   width: 30%;
-  margin: 20px auto;
-  padding: 20px;
 }
 
 .form-group {

@@ -3,7 +3,7 @@ import * as utils from "./utils.js";
 
 const form = document.querySelector("form");
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", async event => {
     event.preventDefault();
 
     const formData = new FormData(form);
