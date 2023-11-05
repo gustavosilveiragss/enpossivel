@@ -68,13 +68,6 @@ CREATE TABLE
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         account_id INT NOT NULL,
         cpf VARCHAR(14) NOT NULL DEFAULT "",
-        status ENUM(
-            'incompleto',
-            'pendente',
-            'aprovado',
-            'rejeitado',
-            'finalizado'
-        ) DEFAULT 'incompleto',
         payment_method_id INT NULL,
         card_id INT NULL,
         total_price DECIMAL(10, 2) NOT NULL,
@@ -93,27 +86,4 @@ CREATE TABLE
         FOREIGN KEY (product_id) REFERENCES product(product_id)
     );
 
-CREATE TABLE
-    payment (
-        payment_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        order_id INT NOT NULL,
-        amount_payed DECIMAL(10, 2) NOT NULL,
-        FOREIGN KEY (order_id) REFERENCES `order`(order_id)
-    );
-
-CREATE TABLE
-    payment_instalment (
-        payment_instalment_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        payment_id INT NULL,
-        price DECIMAL(10, 2) NOT NULL,
-        FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
-    );
-
-
-SELECT * from `order`;
-
-SELECT * from card;
-
-UPDATE `order` SET cpf = "123.123.123-12", status = "pendente", payment_method_id = 2, card_id = 1 WHERE order_id = 1
+SELECT * FROM `order`;
