@@ -18,6 +18,7 @@ async function genCheckoutPage() {
     }
 
     const order = await response.json();
+    const order_id = order.order_id;
     const totalPrice = document.querySelector("#total-price");
     totalPrice.innerText = `${Number(order.total_price).toFixed(2)}`;
 
@@ -25,13 +26,34 @@ async function genCheckoutPage() {
         headers: { "Content-Type": "application/json", },
         method: "POST",
         body: JSON.stringify({
-            order_id: order.order_id,
+            order_id: order_id,
         }),
     });
 
     if (!response || !response.ok) {
         return;
     }
+
+    const form = document.querySelector("form");
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        formData.set("order_id", order_id);
+        // this is not really necessary but it saves some work on the backend
+        formData.set("account_id", auth.getAccountToken());
+
+        const response = await fetch("/php/update_order.php", {
+            method: "POST",
+            body: formData,
+        });
+
+        if (!response || !response.ok) {
+            utils.showNotification("Finalização do pedido deu errado :(");
+            return;
+        }
+    });
 
     const products = await response.json();
 
@@ -72,13 +94,13 @@ async function genCheckoutPage() {
     cpfInput.oninput = () => {
         //https://pt.stackoverflow.com/a/290510
         const v = cpfInput.value;
-        
+
         if (isNaN(v[v.length - 1])) {
             // allow only numbers
             cpfInput.value = v.substring(0, v.length - 1);
             return;
         }
-    
+
         cpfInput.setAttribute("maxlength", "14");
         if (v.length == 3 || v.length == 7) cpfInput.value += ".";
         else if (v.length == 11) cpfInput.value += "-";
@@ -157,7 +179,7 @@ async function genCheckoutPage() {
                     const dateContainer = document.createElement("div");
                     dateContainer.id = "date-container";
                     dateContainer.name = "date-container";
-                    
+
                     const formInputMonth = document.createElement("input");
                     formInputMonth.id = "card-expiration-date-month";
                     formInputMonth.name = "card-expiration-date-month";
@@ -176,16 +198,16 @@ async function genCheckoutPage() {
                     formInputMonth.maxLength = 2;
                     formInputYear.min = 23;
                     formInputYear.placeholder = "YY";
-                    
+
                     dateContainer.appendChild(formInputMonth);
                     dateContainer.appendChild(formInputYear);
-                    
+
                     dateContainer.childNodes.forEach(e => {
                         e.addEventListener("input", function () {
                             this.value = this.value.replace(/\D/g, '').trim().slice(0, 2);
                         });
                     });
-                    
+
                     formGroup.appendChild(formLabel);
                     formGroup.appendChild(dateContainer);
 
@@ -193,7 +215,7 @@ async function genCheckoutPage() {
                 }
 
                 makeHeading("Dados do cartão:");
-                makeFormInput("Dono do cartão:", "card-owner", "text");
+                makeFormInput("Dono do cartão:", "card-owner-name", "text");
                 makeFormInput("Número do cartão:", "card-number", "text");
                 makeMonthFormInput();
                 makeFormInput("Código de segurança:", "card-cvv", "text");

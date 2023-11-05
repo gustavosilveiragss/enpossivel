@@ -56,7 +56,7 @@ CREATE TABLE
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         account_id INT NOT NULL,
         card_owner_name VARCHAR(255) NOT NULL,
-        card_number VARCHAR(16) NOT NULL,
+        card_number VARCHAR(19) NOT NULL,
         card_expiration_date DATE NOT NULL,
         card_cvv VARCHAR(3) NOT NULL,
         FOREIGN KEY (account_id) REFERENCES account(account_id)
@@ -67,7 +67,7 @@ CREATE TABLE
         order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         account_id INT NOT NULL,
-        cpf VARCHAR(11) NOT NULL DEFAULT "",
+        cpf VARCHAR(14) NOT NULL DEFAULT "",
         status ENUM(
             'incompleto',
             'pendente',
@@ -110,3 +110,10 @@ CREATE TABLE
         price DECIMAL(10, 2) NOT NULL,
         FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
     );
+
+
+SELECT * from `order`;
+
+SELECT * from card;
+
+UPDATE `order` SET cpf = "123.123.123-12", status = "pendente", payment_method_id = 2, card_id = 1 WHERE order_id = 1
