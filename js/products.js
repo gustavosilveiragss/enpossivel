@@ -1,16 +1,64 @@
 import * as auth from "./auth.js";
 import * as utils from "./utils.js";
+import * as globals from "./globals.js";
 
-window.onload = create_product_cards();
+globals.push_on_load_hook(create_product_cards);
 
 async function create_product_cards() {
-    const response = await fetch("/php/select_product_listing.php");
+    const searchBar = document.createElement("div");
+    searchBar.classList.add("search-bar");
+
+    const searchInput = document.createElement("input");
+    searchInput.type = "text";
+    searchInput.classList.add("search-bar-input");
+    searchInput.placeholder = "Buscar Produto";
+
+    searchBar.appendChild(searchInput);
+
+    const hamburgerMenu = document.querySelector(".hamburger-menu");
+    hamburgerMenu.before(searchBar);
+
+    if (window.matchMedia("(max-width: 768px)").matches) {
+        const logo = document.querySelector(".logo");
+        logo.style.margin = "auto";
+    }
+
+    await searchProduct("");
+
+    let timeoutId;
+    async function inputChange(changed) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        timeoutId = setTimeout(async () => {
+            await searchProduct(searchInput.value);
+        }, 300);
+    }
+
+    searchInput.oninput = async () => {
+        await inputChange();
+    }
+}
+
+async function searchProduct(search) {
+    const response = await fetch("/php/select_product_listing.php", {
+        headers: { "Content-Type": "application/json", },
+        method: "POST",
+        body: JSON.stringify({
+            search: search
+        }),
+    })
+
     if (!response || !response.ok)
         return;
 
     const json = await response.json();
 
     const productsGrid = document.querySelector(".products-grid");
+
+    productsGrid.innerHTML = "";
+
     json.forEach(product => {
         const productCard = document.createElement("div");
         productCard.classList.add("product-card");

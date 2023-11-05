@@ -3,24 +3,15 @@ import * as utils from "./utils.js";
 
 export async function genNavbar() {
     const navBarHTML = `
-    <div class="nav-bar">
-        <div class="logo">
-        <img src="/public/logo.png" alt="Logo" />
+        <div class="nav-bar">
+            <div class="logo">
+                <img src="/public/logo.png" alt="Logo" />
+            </div>
+            <div class="hamburger-menu">
+                <i class="fa fa-bars"></i>
+            </div>
         </div>
-
-        <div class="search-bar">
-        <input
-            type="text"
-            class="search-bar-input"
-            placeholder="Buscar Produto"
-        />
-        </div>
-
-        <div class="hamburger-menu">
-        <i class="fa fa-bars"></i>
-        </div>
-    </div>
-`;
+    `;
 
     const pages = [
         { name: "Produtos", url: "/pages/index.html" },

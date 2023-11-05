@@ -82,6 +82,7 @@ h2 {
 
 .input-group > input {
   border-radius: 0 5px 5px 0;
+  min-width: 0;
 }
 
 .input-group-prepend {

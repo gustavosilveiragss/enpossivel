@@ -82,7 +82,7 @@ async function create_product_table() {
         titleInput.className = "table-input";
         titleInput.type = "text";
         titleInput.value = product.title;
-        titleInput.onchange = async () => {
+        titleInput.oninput = async () => {
             await inputChange("title");
         };
 
@@ -92,7 +92,7 @@ async function create_product_table() {
         priceInput.className = "table-input";
         priceInput.type = "number";
         priceInput.value = product.price;
-        priceInput.onchange = async () => {
+        priceInput.oninput = async () => {
             await inputChange("price");
         };
 
@@ -102,7 +102,7 @@ async function create_product_table() {
         stockInput.className = "table-input";
         stockInput.type = "number";
         stockInput.value = product.stock;
-        stockInput.onchange = async () => {
+        stockInput.oninput = async () => {
             await inputChange("stock");
         };
 
