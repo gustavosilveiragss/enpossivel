@@ -99,3 +99,60 @@ CREATE TABLE
         price DECIMAL(10, 2) NOT NULL,
         FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
     );
+
+INSERT INTO
+    account (name, email, password, role)
+VALUES (
+        'admin',
+        'admin@admin.com',
+        'admin',
+        'admin'
+    );
+
+INSERT INTO cart (account_id) VALUES (1);
+
+
+INSERT INTO
+    product (title, price, img_path, stock)
+VALUES (
+        'Ovo de Dragão Pré-Histórico',
+        550.00,
+        '/res/images/dragon_egg.png',
+        5
+    ),
+    (
+        'Baú de Maquiagens do Cthulu',
+        75.00,
+        '/res/images/cthulhu_chest.jpeg',
+        1
+    ),
+    (
+        'Globo Ocular de Ciclope Mágico',
+        300.00,
+        '/res/images/globe.jpeg',
+        3
+    ),
+    (
+        'Plantas Lunares Medicinais (Do Bom)',
+        150.00,
+        '/res/images/moonplant.jpeg',
+        15
+    ),
+    (
+        'Gato Preso em uma Lâmpada',
+        5,
+        '/res/images/pixar_cat.jpeg',
+        1
+    ),
+    (
+        'Fibra da Dimensão Temporal do Universo',
+        1.00,
+        '/res/images/time_fiber.jpeg',
+        1
+    ),
+    (
+        'Flor Preta',
+        100.00,
+        '/res/images/black_flower.jpg',
+        3
+    );
