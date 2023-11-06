@@ -119,7 +119,16 @@ async function genCartPage() {
     checkoutButton.onclick = async () => {
         const totalPrice = document.querySelector("#total-price");
         const currentTotalPrice = Number(totalPrice.innerText);
-        console.log(currentTotalPrice);
+
+        const role = await auth.getAccountRole();
+        if (role === 'anon') {
+            utils.showNotification("Você precisa estar logado para fazer um pedido");
+            setTimeout(() => {
+                window.location.href = "/pages/register.html";
+            }, 2000);
+            return;
+        }
+
         await fetch("/php/insert_new_order.php", {
             headers: { "Content-Type": "application/json", },
             method: "POST",
