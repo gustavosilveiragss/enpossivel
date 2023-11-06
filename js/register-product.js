@@ -1,7 +1,8 @@
 import * as auth from "./auth.js";
 import * as utils from "./utils.js";
+import * as globals from "./globals.js";
 
-document.addEventListener("DOMContentLoaded", loaded_register_product);
+globals.push_on_load_hook(loaded_register_product);
 
 const role = await auth.getAccountRole();
 
@@ -44,6 +45,18 @@ function loaded_register_product() {
             fileUpload.querySelector(".fa").classList.add("fa-check");
             fileUpload.querySelector(".text").textContent = file.name;
         }
+    });
+
+    document.querySelector("#title").addEventListener("input", e => {
+        e.target.value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, "").trim().slice(0, 255);
+    });
+
+    document.querySelector("#price").addEventListener("input", e => {
+        e.target.value = e.target.value.replace(/[^0-9.]/g, "").trim().slice(0, 10);
+    });
+
+    document.querySelector("#stock").addEventListener("input", e => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, "").trim().slice(0, 10);
     });
 
     form.addEventListener("submit", async e => {

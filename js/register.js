@@ -1,6 +1,10 @@
 import * as auth from "./auth.js";
 import * as utils from "./utils.js";
 
+document.querySelector("input").addEventListener("input", e => {
+    e.target.value = e.target.value.trim().slice(0, 255);
+});
+
 const form = document.querySelector("form");
 
 form.addEventListener("submit", async event => {

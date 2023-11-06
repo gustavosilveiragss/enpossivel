@@ -82,7 +82,8 @@ async function create_product_table() {
         titleInput.className = "table-input";
         titleInput.type = "text";
         titleInput.value = product.title;
-        titleInput.oninput = async () => {
+        titleInput.oninput = async e => {
+            e.target.value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, "").trim().slice(0, 255);
             await inputChange("title");
         };
 
@@ -92,7 +93,8 @@ async function create_product_table() {
         priceInput.className = "table-input";
         priceInput.type = "number";
         priceInput.value = product.price;
-        priceInput.oninput = async () => {
+        priceInput.oninput = async e => {
+            e.target.value = e.target.value.replace(/[^0-9.]/g, "").trim().slice(0, 10);
             await inputChange("price");
         };
 
@@ -102,7 +104,8 @@ async function create_product_table() {
         stockInput.className = "table-input";
         stockInput.type = "number";
         stockInput.value = product.stock;
-        stockInput.oninput = async () => {
+        stockInput.oninput = async e => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, "").trim().slice(0, 10);
             await inputChange("stock");
         };
 
