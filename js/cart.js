@@ -122,7 +122,7 @@ async function genCartPage() {
 
         const role = await auth.getAccountRole();
         if (role === 'anon') {
-            utils.showNotification("Você precisa estar logado para fazer um pedido");
+            utils.showNotification("Você precisa estar autenticado para fazer um pedido");
             setTimeout(() => {
                 window.location.href = "/pages/register.html";
             }, 2000);

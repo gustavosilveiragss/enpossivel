@@ -114,12 +114,7 @@ INSERT INTO cart (account_id) VALUES (1);
 
 INSERT INTO
     product (title, price, img_path, stock)
-VALUES (
-        'Ovo de Dragão Pré-Histórico',
-        550.00,
-        '/res/images/dragon_egg.png',
-        5
-    ),
+VALUES
     (
         'Baú de Maquiagens do Cthulu',
         75.00,
