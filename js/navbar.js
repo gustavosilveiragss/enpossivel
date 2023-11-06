@@ -24,7 +24,7 @@ export async function genNavbar() {
     switch (role) {
         case "anon":
             buttons.push({
-                name: "Bater Ponto",
+                name: "Autenticar Crachá",
                 id: "login-btn",
                 onclick: () => (window.location.href = "/pages/login.html"),
             });

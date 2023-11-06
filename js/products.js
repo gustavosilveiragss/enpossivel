@@ -78,10 +78,10 @@ async function searchProduct(search) {
 
         const productButton = document.createElement("button");
         productButton.id = `product-${product.product_id}`;
-        productButton.textContent = "Adicionar ao caldeirão";
+        productButton.textContent = "Adicionar ao Caldeirão";
         productButton.onclick = async () => {
             const id = utils.databaseIdFromElementId(productButton);
-            
+
             const response = await fetch("/php/insert_cart_product.php", {
                 headers: { "Content-Type": "application/json", },
                 method: "POST",
@@ -93,15 +93,15 @@ async function searchProduct(search) {
 
             if (!response || !response.ok) {
                 const data = await response.json();
-    
+
                 if (data && data.error) {
                     utils.showNotification(data.error);
                     return;
                 }
-    
+
                 utils.showNotification("Erro ao adicionar ao caldeirão");
                 return;
-            }            
+            }
 
             utils.showNotification(`${productName.textContent} foi adicionado ao caldeirão.`);
             await searchProduct(document.querySelector(".search-bar-input").value);
