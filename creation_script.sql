@@ -128,7 +128,7 @@ VALUES
         3
     ),
     (
-        'Plantas Lunares Medicinais (Do Bom)',
+        'Planta Lunar Medicinal (Do Bom)',
         150.00,
         '/res/images/moonplant.jpeg',
         15
