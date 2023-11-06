@@ -12,9 +12,45 @@ $account_id = $body->account_id;
 $cart_id = $account_id;
 
 $db = new mysqli($env["DB_HOST"], $env["DB_USER"], $env["DB_PASSWORD"], $env["DB_DATABASE"]);
-$db->query("INSERT INTO cart_product (cart_id, product_id) VALUES($cart_id, $product_id)");
+$stmt = $db->prepare("SELECT stock FROM product WHERE product_id = ?");
+
+$stmt->bind_param("i", $product_id);
+
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    http_response_code(500);
+    echo json_encode(["error" => "Produto não encontrado"]);
+    $db->close();
+    die();
+}
+
+$row = $result->fetch_assoc();
+$stock = $row['stock'];
+
+if ($stock <= 0) {
+    http_response_code(500);
+    echo json_encode(["error" => "Produto fora de estoque"]);
+    $db->close();
+    die();
+}
+
+echo $cart_id;
+echo $product_id;
+
+$stmt = $db->prepare("INSERT INTO cart_product (cart_id, product_id) VALUES (?,?)");
+
+$stmt->bind_param("ii", $cart_id, $product_id);
+
+$stmt->execute();
+
+$stmt = $db->prepare("UPDATE product SET stock = stock - 1 WHERE product_id = ?");
+
+$stmt->bind_param("i", $product_id);
+
+$stmt->execute();
 
 $db->commit();
 $db->close();
-
-http_response_code(200);

@@ -81,7 +81,8 @@ async function searchProduct(search) {
         productButton.textContent = "Adicionar ao caldeirão";
         productButton.onclick = async () => {
             const id = utils.databaseIdFromElementId(productButton);
-            await fetch("/php/insert_cart_product.php", {
+            
+            const response = await fetch("/php/insert_cart_product.php", {
                 headers: { "Content-Type": "application/json", },
                 method: "POST",
                 body: JSON.stringify({
@@ -89,7 +90,21 @@ async function searchProduct(search) {
                     product_id: id,
                 }),
             });
+
+            if (!response || !response.ok) {
+                const data = await response.json();
+    
+                if (data && data.error) {
+                    utils.showNotification(data.error);
+                    return;
+                }
+    
+                utils.showNotification("Erro ao adicionar ao caldeirão");
+                return;
+            }            
+
             utils.showNotification(`${productName.textContent} foi adicionado ao caldeirão.`);
+            await searchProduct(document.querySelector(".search-bar-input").value);
         };
 
         productInfo.appendChild(productName);
