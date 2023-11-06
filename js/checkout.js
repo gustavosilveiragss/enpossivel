@@ -14,6 +14,9 @@ async function genCheckoutPage() {
     });
 
     if (!response || !response.ok) {
+        const formWrapper = document.querySelector(".form-wrapper");
+        formWrapper.innerHTML = "";
+        formWrapper.textContent = "Não há pedidos pendentes";
         return;
     }
 
@@ -53,6 +56,11 @@ async function genCheckoutPage() {
             utils.showNotification("Finalização do pedido deu errado :(");
             return;
         }
+
+        utils.showNotification("Pedido finalizado com sucesso!");
+        setTimeout(() => {
+            window.location.href = "/pages/";
+        }, 2000);
     });
 
     const products = await response.json();

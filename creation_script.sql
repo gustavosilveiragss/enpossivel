@@ -68,6 +68,10 @@ CREATE TABLE
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         account_id INT NOT NULL,
         cpf VARCHAR(14) NOT NULL DEFAULT "",
+        status ENUM(
+            'incompleto',
+            'finalizado'
+        ) DEFAULT 'incompleto',
         payment_method_id INT NULL,
         card_id INT NULL,
         total_price DECIMAL(10, 2) NOT NULL,

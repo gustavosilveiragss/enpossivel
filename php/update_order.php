@@ -41,6 +41,11 @@ if ($payment_method === "debit" || $payment_method === "credit") {
 }
 
 
-$stmt = $db->prepare("UPDATE `order` SET cpf = ?, payment_method_id = ?, card_id = ? WHERE order_id = ?");
+$stmt = $db->prepare("UPDATE `order` SET cpf = ?, status = \"finalizado\", payment_method_id = ?, card_id = ? WHERE order_id = ?");
 $stmt->bind_param("siii", $_POST["cpf"], $payment_method_id, $card_id, $_POST["order_id"]);
+$stmt->execute();
+
+// INVARIANT: for every account there is a single cart
+$stmt = $db->prepare("DELETE FROM cart_product WHERE cart_id = ?");
+$stmt->bind_param("i", $_POST["account_id"]);
 $stmt->execute();
