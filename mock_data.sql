@@ -24,5 +24,3 @@ VALUES (
         39.99,
         '/res/images/_42dfff0d-10bb-4d6f-ba2b-e62939034c64.jpeg'
     );
-
-SELECT * from card;

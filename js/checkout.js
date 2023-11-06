@@ -96,9 +96,8 @@ function makeCardInfo() {
     ];
 }
 
-
 async function genCheckoutPage() {
-    let response = await fetch("/php/select_newest_order_from_account.php", {
+    let response = await fetch("/php/select_order_info.php", {
         headers: { "Content-Type": "application/json", },
         method: "POST",
         body: JSON.stringify({

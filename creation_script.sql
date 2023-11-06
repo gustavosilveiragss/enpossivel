@@ -99,7 +99,3 @@ CREATE TABLE
         price DECIMAL(10, 2) NOT NULL,
         FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
     );
-
-SELECT * FROM `order` WHERE account_id = 1 AND status = 'finalizado' ORDER BY created_at DESC LIMIT 1;
-
-SELECT * FROM `order`
