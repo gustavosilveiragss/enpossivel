@@ -40,22 +40,10 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    payment_method (
-        payment_method_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        name VARCHAR(255) NOT NULL
-    );
-
-INSERT INTO
-    payment_method (name)
-VALUES ('pix'), ('debit'), ('credit');
-
-CREATE TABLE
     card (
         card_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         account_id INT NOT NULL,
-        card_type ENUM('debit', 'credit') NOT NULL,
         card_owner_name VARCHAR(255) NOT NULL,
         card_number VARCHAR(19) NOT NULL,
         card_expiration_date DATE NOT NULL,
@@ -73,11 +61,14 @@ CREATE TABLE
             'incompleto',
             'finalizado'
         ) DEFAULT 'incompleto',
-        payment_method_id INT NULL,
+        payment_method ENUM(
+            'pix',
+            'debit',
+            'credit'
+        ) NULL DEFAULT NULL,
         card_id INT NULL,
         total_price DECIMAL(10, 2) NOT NULL,
         FOREIGN KEY (account_id) REFERENCES account(account_id),
-        FOREIGN KEY (payment_method_id) REFERENCES payment_method(payment_method_id),
         FOREIGN KEY (card_id) REFERENCES card(card_id)
     );
 
@@ -108,3 +99,7 @@ CREATE TABLE
         price DECIMAL(10, 2) NOT NULL,
         FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
     );
+
+SELECT * FROM `order` WHERE account_id = 1 AND status = 'finalizado' ORDER BY created_at DESC LIMIT 1;
+
+SELECT * FROM `order`

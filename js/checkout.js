@@ -236,25 +236,30 @@ async function genCheckoutPage() {
         }
     };
 
-    const card_info = json.card_info;
-    if (card_info) {
-        paymentMethod.value = card_info.card_type;
+    const last_order_info = json.last_order_info;
+    if (last_order_info) {
+        const cpf = document.querySelector("#cpf");
+        cpf.value = last_order_info.cpf;
+
+        paymentMethod.value = last_order_info.payment_method;
         paymentMethod.dispatchEvent(new Event("change"));
 
-        const cardOwnerName = document.querySelector("#card-owner-name");
-        cardOwnerName.value = card_info.card_owner_name;
+        const card_info = json.last_order_card_info;
+        if (card_info) {
+            const cardOwnerName = document.querySelector("#card-owner-name");
+            cardOwnerName.value = card_info.card_owner_name;
 
-        const cardNumber = document.querySelector("#card-number");
-        cardNumber.value = card_info.card_number;
+            const cardNumber = document.querySelector("#card-number");
+            cardNumber.value = card_info.card_number;
 
-        const cardExpirationDateMonth = document.querySelector("#card-expiration-date-month");
-        cardExpirationDateMonth.value = card_info.card_expiration_date_month;
+            const cardExpirationDateMonth = document.querySelector("#card-expiration-date-month");
+            cardExpirationDateMonth.value = card_info.card_expiration_date_month;
 
-        const cardExpirationDateYear = document.querySelector("#card-expiration-date-year");
-        cardExpirationDateYear.value = card_info.card_expiration_date_year;
+            const cardExpirationDateYear = document.querySelector("#card-expiration-date-year");
+            cardExpirationDateYear.value = card_info.card_expiration_date_year;
 
-        const cardCvv = document.querySelector("#card-cvv");
-        cardCvv.value = card_info.card_cvv;
+            const cardCvv = document.querySelector("#card-cvv");
+            cardCvv.value = card_info.card_cvv;
+        }
     }
-
 }
