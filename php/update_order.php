@@ -26,16 +26,16 @@ $card_query_result = $stmt->get_result();
 $card_id = null;
 if ($payment_method === "debit" || $payment_method === "credit") {
     if ($card_query_result->num_rows === 0) {
-        $stmt = $db->prepare("INSERT INTO card(account_id, card_owner_name, card_number, card_expiration_date, card_cvv) VALUES(?, ?, ?, ?, ?)");
-        $stmt->bind_param("issss", $_POST["account_id"], $_POST["card-owner-name"], $_POST["card-number"], $card_expiration_date, $_POST["card-cvv"]);
+        $stmt = $db->prepare("INSERT INTO card(account_id, card_type, card_owner_name, card_number, card_expiration_date, card_cvv) VALUES(?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssss", $_POST["account_id"], $payment_method, $_POST["card-owner-name"], $_POST["card-number"], $card_expiration_date, $_POST["card-cvv"]);
         $stmt->execute();
 
         $card_id = $db->insert_id;
     } else {
         $card_id = $card_query_result->fetch_assoc()["card_id"];
 
-        $stmt = $db->prepare("UPDATE card SET card_owner_name = ?, card_number = ?, card_expiration_date = ?, card_cvv = ? WHERE account_id = ?");
-        $stmt->bind_param("ssssi", $_POST["card-owner-name"], $_POST["card-number"], $card_expiration_date, $_POST["card-cvv"], $_POST["account_id"]);
+        $stmt = $db->prepare("UPDATE card SET card_type = ?, card_owner_name = ?, card_number = ?, card_expiration_date = ?, card_cvv = ? WHERE account_id = ?");
+        $stmt->bind_param("ssssi", $payment_method, $_POST["card-owner-name"], $_POST["card-number"], $card_expiration_date, $_POST["card-cvv"], $_POST["account_id"]);
         $stmt->execute();
     }
 }

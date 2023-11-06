@@ -3,6 +3,99 @@ import * as utils from "./utils.js";
 import * as globals from "./globals.js";
 
 globals.push_on_load_hook(genCheckoutPage);
+function makeMonthFormInput() {
+    const formGroup = document.createElement("div");
+    formGroup.classList.add("form-group");
+
+    const formLabel = document.createElement("label");
+    formLabel.htmlFor = "card-expiration-date";
+    formLabel.textContent = "Data de Validade";
+
+    const dateContainer = document.createElement("div");
+    dateContainer.id = "date-container";
+    dateContainer.name = "date-container";
+
+    const formInputMonth = document.createElement("input");
+    formInputMonth.id = "card-expiration-date-month";
+    formInputMonth.name = "card-expiration-date-month";
+    formInputMonth.required = true;
+    formInputMonth.type = "number";
+    formInputMonth.min = 1;
+    formInputMonth.max = 12;
+    formInputMonth.maxLength = 2;
+    formInputMonth.placeholder = "MM";
+
+    const formInputYear = document.createElement("input");
+    formInputYear.id = "card-expiration-date-year";
+    formInputYear.name = "card-expiration-date-year";
+    formInputYear.required = true;
+    formInputYear.type = "number";
+    formInputMonth.maxLength = 2;
+    formInputYear.min = 23;
+    formInputYear.placeholder = "YY";
+
+    dateContainer.appendChild(formInputMonth);
+    dateContainer.appendChild(formInputYear);
+
+    dateContainer.childNodes.forEach(e => {
+        e.addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, '').trim().slice(0, 2);
+        });
+    });
+
+    formGroup.appendChild(formLabel);
+    formGroup.appendChild(dateContainer);
+
+    return formGroup;
+}
+
+function makeFormInput(label, name, type) {
+    const formGroup = document.createElement("div");
+    formGroup.classList.add("form-group");
+
+    const formLabel = document.createElement("label");
+    formLabel.htmlFor = name;
+    formLabel.textContent = label;
+
+    const formInput = document.createElement("input");
+    formInput.id = name;
+    formInput.name = name;
+    formInput.required = true;
+    formInput.type = type;
+
+    formGroup.appendChild(formLabel);
+    formGroup.appendChild(formInput);
+
+    if (type === "text" && (name === "card-number" || name === "card-cvv")) {
+        formInput.addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, '').trim();
+            if (name === "card-number") {
+                this.value = this.value.replace(/(\d{4})/g, '$1 ').trim().slice(0, 19);
+            } else if (name === "card-cvv") {
+                this.value = this.value.slice(0, 3);
+            }
+        });
+    }
+
+    return formGroup;
+}
+
+function makeHeading(label) {
+    const heading = document.createElement("h2");
+    heading.textContent = label;
+    return heading;
+}
+
+function makeCardInfo() {
+    return [
+        makeHeading("Dados do cartão:"),
+        makeFormInput("Dono do cartão:", "card-owner-name", "text"),
+        makeFormInput("Número do cartão:", "card-number", "text"),
+        makeMonthFormInput(),
+        makeFormInput("Código de segurança:", "card-cvv", "text")
+    ];
+}
+
 
 async function genCheckoutPage() {
     let response = await fetch("/php/select_newest_order_from_account.php", {
@@ -20,7 +113,8 @@ async function genCheckoutPage() {
         return;
     }
 
-    const order = await response.json();
+    const json = await response.json();
+    const order = json.order;
     const order_id = order.order_id;
     const totalPrice = document.querySelector("#total-price");
     totalPrice.innerText = `${Number(order.total_price).toFixed(2)}`;
@@ -115,18 +209,12 @@ async function genCheckoutPage() {
     };
 
     const paymentMethodData = document.querySelector(".payment-method-data");
-
     const paymentMethod = document.querySelector("[name=payment-method]");
     paymentMethod.onchange = () => {
-        function makeHeading(label) {
-            const paymentMethodDataHeading = document.createElement("h2");
-            paymentMethodDataHeading.textContent = label;
-            paymentMethodData.appendChild(paymentMethodDataHeading);
-        }
         paymentMethodData.innerHTML = "";
         switch (paymentMethod.value) {
             case "pix":
-                makeHeading("QR Code:");
+                paymentMethodData.appendChild(makeHeading("QR Code:"));
                 paymentMethodData.style.justifyContent = "center";
 
                 const pixImageWrapper = document.createElement("div");
@@ -143,92 +231,30 @@ async function genCheckoutPage() {
                 break;
             case "credit":
             case "debit":
-                function makeFormInput(label, name, type, customizationCallback = null) {
-                    const formGroup = document.createElement("div");
-                    formGroup.classList.add("form-group");
-
-                    const formLabel = document.createElement("label");
-                    formLabel.htmlFor = name;
-                    formLabel.textContent = label;
-
-                    const formInput = document.createElement("input");
-                    formInput.id = name;
-                    formInput.name = name;
-                    formInput.required = true;
-                    formInput.type = type;
-                    if (customizationCallback)
-                        customizationCallback(formInput);
-
-                    formGroup.appendChild(formLabel);
-                    formGroup.appendChild(formInput);
-
-                    paymentMethodData.appendChild(formGroup);
-
-                    if (type === "text" && (name === "card-number" || name === "card-cvv")) {
-                        formInput.addEventListener("input", function () {
-                            this.value = this.value.replace(/\D/g, '').trim();
-                            if (name === "card-number") {
-                                this.value = this.value.replace(/(\d{4})/g, '$1 ').trim().slice(0, 19);
-                            } else if (name === "card-cvv") {
-                                this.value = this.value.slice(0, 3);
-                            }
-                        });
-                    }
-                }
-
-                function makeMonthFormInput() {
-                    const formGroup = document.createElement("div");
-                    formGroup.classList.add("form-group");
-
-                    const formLabel = document.createElement("label");
-                    formLabel.htmlFor = "card-expiration-date";
-                    formLabel.textContent = "Data de Validade";
-
-                    const dateContainer = document.createElement("div");
-                    dateContainer.id = "date-container";
-                    dateContainer.name = "date-container";
-
-                    const formInputMonth = document.createElement("input");
-                    formInputMonth.id = "card-expiration-date-month";
-                    formInputMonth.name = "card-expiration-date-month";
-                    formInputMonth.required = true;
-                    formInputMonth.type = "number";
-                    formInputMonth.min = 1;
-                    formInputMonth.max = 12;
-                    formInputMonth.maxLength = 2;
-                    formInputMonth.placeholder = "MM";
-
-                    const formInputYear = document.createElement("input");
-                    formInputYear.id = "card-expiration-date-year";
-                    formInputYear.name = "card-expiration-date-year";
-                    formInputYear.required = true;
-                    formInputYear.type = "number";
-                    formInputMonth.maxLength = 2;
-                    formInputYear.min = 23;
-                    formInputYear.placeholder = "YY";
-
-                    dateContainer.appendChild(formInputMonth);
-                    dateContainer.appendChild(formInputYear);
-
-                    dateContainer.childNodes.forEach(e => {
-                        e.addEventListener("input", function () {
-                            this.value = this.value.replace(/\D/g, '').trim().slice(0, 2);
-                        });
-                    });
-
-                    formGroup.appendChild(formLabel);
-                    formGroup.appendChild(dateContainer);
-
-                    paymentMethodData.appendChild(formGroup);
-                }
-
-                makeHeading("Dados do cartão:");
-                makeFormInput("Dono do cartão:", "card-owner-name", "text");
-                makeFormInput("Número do cartão:", "card-number", "text");
-                makeMonthFormInput();
-                makeFormInput("Código de segurança:", "card-cvv", "text");
-
+                makeCardInfo().forEach(node => paymentMethodData.appendChild(node));
                 break;
         }
     };
+
+    const card_info = json.card_info;
+    if (card_info) {
+        paymentMethod.value = card_info.card_type;
+        paymentMethod.dispatchEvent(new Event("change"));
+
+        const cardOwnerName = document.querySelector("#card-owner-name");
+        cardOwnerName.value = card_info.card_owner_name;
+
+        const cardNumber = document.querySelector("#card-number");
+        cardNumber.value = card_info.card_number;
+
+        const cardExpirationDateMonth = document.querySelector("#card-expiration-date-month");
+        cardExpirationDateMonth.value = card_info.card_expiration_date_month;
+
+        const cardExpirationDateYear = document.querySelector("#card-expiration-date-year");
+        cardExpirationDateYear.value = card_info.card_expiration_date_year;
+
+        const cardCvv = document.querySelector("#card-cvv");
+        cardCvv.value = card_info.card_cvv;
+    }
+
 }

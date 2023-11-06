@@ -21,6 +21,21 @@ if ($response["status"] === 'finalizado') {
     exit();
 }
 
-echo json_encode($response);
+
+$card_info = null;
+
+$stmt = $db->prepare("SELECT * FROM card WHERE account_id = ? LIMIT 1");
+$stmt->bind_param("i", $account_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $card_info = $result->fetch_assoc();
+}
+
+$card_info["card_expiration_date_month"] = substr($card_info["card_expiration_date"], 5, 2);
+$card_info["card_expiration_date_year"] = substr($card_info["card_expiration_date"], 2, 2);
+
+echo json_encode(array("order" => $response, "card_info" => $card_info));
 
 $db->close();

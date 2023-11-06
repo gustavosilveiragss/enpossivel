@@ -55,6 +55,7 @@ CREATE TABLE
         card_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         account_id INT NOT NULL,
+        card_type ENUM('debit', 'credit') NOT NULL,
         card_owner_name VARCHAR(255) NOT NULL,
         card_number VARCHAR(19) NOT NULL,
         card_expiration_date DATE NOT NULL,
